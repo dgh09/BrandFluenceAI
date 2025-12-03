@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching Inteligente - BrandFluenceAI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --secondary: #EC4899;
+            --accent: #14B8A6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --dark: #0F172A;
+            --dark-light: #1E293B;
+            --dark-lighter: #334155;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --gradient-1: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            --gradient-2: linear-gradient(135deg, #14B8A6 0%, #6366F1 100%);
+            --gradient-3: linear-gradient(135deg, #F59E0B 0%, #EC4899 100%);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--dark-light);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            padding: 0 2rem;
+            margin-bottom: 3rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 0.75rem 2rem;
+            margin: 0.25rem 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+        }
+
+        .nav-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 1.25rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .page-title h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: var(--dark-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .notification-btn:hover {
+            background: var(--dark-lighter);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--secondary);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--dark-light);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-profile:hover {
+            background: var(--dark-lighter);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+        }
+
+        .user-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Filters Section */
+        .filters-section {
+            background: var(--dark-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .filters-header h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .ai-badge {
+            background: var(--gradient-1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .filter-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .filter-input {
+            background: var(--dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .filter-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        select.filter-input {
+            cursor: pointer;
+        }
+
+        .tags-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            background: var(--dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.75rem;
+            min-height: 48px;
+        }
+
+        .tag {
+            background: var(--gradient-1);
+            padding: 0.375rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-search {
+            grid-column: span 4;
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Results Section */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-info h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .results-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .results-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--dark-light);
+            border-radius: 12px;
+            padding: 0.25rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .sort-select {
+            background: var(--dark-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        /* Creator Cards */
+        .creators-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .creator-card {
+            background: var(--dark-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .creator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .creator-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .creator-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .match-score-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gradient-1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            font-family: 'Sora', sans-serif;
+        }
+
+        .creator-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .creator-avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--gradient-2);
+            position: relative;
+        }
+
+        .verified-badge {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: var(--success);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--dark-light);
+        }
+
+        .creator-main-info h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .creator-handle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .creator-niches {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .niche-tag {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        .creator-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 1.5rem 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .creator-bio {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .creator-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-contact {
+            flex: 1;
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-view {
+            background: var(--dark);
+            color: var(--text);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-view:hover {
+            background: var(--dark-lighter);
+        }
+
+        /* Match Reasons */
+        .match-reasons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .match-reason {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .reason-icon {
+            color: var(--success);
+        }
+
+        /* AI Insights Panel */
+        .ai-insights {
+            background: var(--dark-light);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .ai-insights-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .ai-insights-header h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .insights-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .insight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+        }
+
+        .insight-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .insight-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .insight-content p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .creators-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .creators-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">BrandFluenceAI</div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <span class="nav-icon">📊</span>
+                Dashboard
+            </li>
+            <li class="nav-item active">
+                <span class="nav-icon">🎯</span>
+                Matching IA
+            </li>
+            <li class="nav-item">
+                <span class="nav-icon">📋</span>
+                Mis Campañas
+            </li>
+            <li class="nav-item">
+                <span class="nav-icon">💬</span>
+                Mensajes
+            </li>
+            <li class="nav-item">
+                <span class="nav-icon">📈</span>
+                Analytics
+            </li>
+            <li class="nav-item">
+                <span class="nav-icon">💳</span>
+                Pagos
+            </li>
+            <li class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                Configuración
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="page-title">
+                <h1>🎯 Matching Inteligente</h1>
+                <p>Encuentra a los creadores perfectos con IA</p>
+            </div>
+            <div class="top-actions">
+                <div class="notification-btn">
+                    🔔
+                    <div class="notification-badge">3</div>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar"></div>
+                    <div class="user-info">
+                        <h4>Nike Colombia</h4>
+                        <p>Marca</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Insights -->
+        <div class="ai-insights">
+            <div class="ai-insights-header">
+                <div class="ai-icon">🤖</div>
+                <div>
+                    <h3>Insights de IA</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Recomendaciones personalizadas para tu campaña</p>
+                </div>
+            </div>
+            <div class="insights-list">
+                <div class="insight-item">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-content">
+                        <h4>Mejor momento para lanzar</h4>
+                        <p>Basado en el análisis de tendencias, te recomendamos lanzar tu campaña de deportes entre el lunes y miércoles para máximo engagement.</p>
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <div class="insight-icon">🎨</div>
+                    <div class="insight-content">
+                        <h4>Estilo de contenido trending</h4>
+                        <p>Los videos cortos (15-30s) con música energética y transiciones rápidas están generando +40% más engagement en tu nicho.</p>
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <div class="insight-icon">📊</div>
+                    <div class="insight-content">
+                        <h4>Presupuesto optimizado</h4>
+                        <p>Para tu presupuesto de $2,000, encontramos 15 creadores de alta calidad con engagement rate superior al 5%.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <div class="filters-header">
+                <h2>Filtros de Búsqueda</h2>
+                <div class="ai-badge">
+                    🤖 Powered by AI
+                </div>
+            </div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Nicho</label>
+                    <select class="filter-input">
+                        <option>Deportes & Fitness</option>
+                        <option>Fashion & Lifestyle</option>
+                        <option>Tech & Gaming</option>
+                        <option>Food & Travel</option>
+                        <option>Beauty & Skincare</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Presupuesto</label>
+                    <select class="filter-input">
+                        <option>$500 - $1,000</option>
+                        <option>$1,000 - $2,000</option>
+                        <option>$2,000 - $5,000</option>
+                        <option>$5,000+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Seguidores</label>
+                    <select class="filter-input">
+                        <option>10K - 50K</option>
+                        <option>50K - 100K</option>
+                        <option>100K - 500K</option>
+                        <option>500K+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Engagement Rate</label>
+                    <select class="filter-input">
+                        <option>3% - 5%</option>
+                        <option>5% - 8%</option>
+                        <option>8% - 12%</option>
+                        <option>12%+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Tipo de Contenido</label>
+                    <div class="tags-input">
+                        <span class="tag">Videos Cortos <span class="tag-remove">×</span></span>
+                        <span class="tag">Reels <span class="tag-remove">×</span></span>
+                        <span class="tag">Stories <span class="tag-remove">×</span></span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Audiencia Target</label>
+                    <input type="text" class="filter-input" placeholder="Ej: 18-25 años, Colombia">
+                </div>
+                <div class="filter-group">
+                    <label>Género</label>
+                    <select class="filter-input">
+                        <option>Todos</option>
+                        <option>Femenino</option>
+                        <option>Masculino</option>
+                        <option>No binario</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Ubicación</label>
+                    <input type="text" class="filter-input" placeholder="País o ciudad">
+                </div>
+                <button class="btn-search">🔍 Buscar Matches con IA</button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-header">
+            <div class="results-info">
+                <h2>15 Creadores Encontrados</h2>
+                <p>Ordenados por mejor match score</p>
+            </div>
+            <div class="results-controls">
+                <div class="view-toggle">
+                    <button class="view-btn active">📇 Tarjetas</button>
+                    <button class="view-btn">📋 Lista</button>
+                </div>
+                <select class="sort-select">
+                    <option>Mejor Match</option>
+                    <option>Más Seguidores</option>
+                    <option>Mayor Engagement</option>
+                    <option>Menor Precio</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Creators Grid -->
+        <div class="creators-grid">
+            <!-- Creator Card 1 -->
+            <div class="creator-card">
+                <div class="match-score-badge">95</div>
+                <div class="creator-header">
+                    <div class="creator-avatar-large">
+                        <div class="verified-badge">✓</div>
+                    </div>
+                    <div class="creator-main-info">
+                        <h3>María García</h3>
+                        <p class="creator-handle">@mariafit</p>
+                        <div class="creator-niches">
+                            <span class="niche-tag">Fitness</span>
+                            <span class="niche-tag">Lifestyle</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="creator-stats">
+                    <div class="stat">
+                        <div class="stat-value">125K</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">8.5%</div>
+                        <div class="stat-label">Engagement</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">$850</div>
+                        <div class="stat-label">Por video</div>
+                    </div>
+                </div>
+
+                <p class="creator-bio">
+                    Entrenadora personal certificada. Contenido motivacional y rutinas de ejercicio. Audiencia 80% femenina, 18-35 años.
+                </p>
+
+                <div class="match-reasons">
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Nicho perfecto para deportes
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Engagement rate superior al promedio
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Dentro de tu presupuesto
+                    </div>
+                </div>
+
+                <div class="creator-actions">
+                    <button class="btn-contact">Contactar</button>
+                    <button class="btn-view">👁 Ver Perfil</button>
+                </div>
+            </div>
+
+            <!-- Creator Card 2 -->
+            <div class="creator-card">
+                <div class="match-score-badge" style="background: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);">92</div>
+                <div class="creator-header">
+                    <div class="creator-avatar-large" style="background: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);">
+                        <div class="verified-badge">✓</div>
+                    </div>
+                    <div class="creator-main-info">
+                        <h3>Carlos Ruiz</h3>
+                        <p class="creator-handle">@carlosrunning</p>
+                        <div class="creator-niches">
+                            <span class="niche-tag">Running</span>
+                            <span class="niche-tag">Deportes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="creator-stats">
+                    <div class="stat">
+                        <div class="stat-value">98K</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">7.2%</div>
+                        <div class="stat-label">Engagement</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">$650</div>
+                        <div class="stat-label">Por video</div>
+                    </div>
+                </div>
+
+                <p class="creator-bio">
+                    Corredor profesional. Comparto tips de entrenamiento y nutrición. Audiencia mixta, apasionada por el running.
+                </p>
+
+                <div class="match-reasons">
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Especializado en deportes
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Audiencia altamente comprometida
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Experiencia con marcas deportivas
+                    </div>
+                </div>
+
+                <div class="creator-actions">
+                    <button class="btn-contact">Contactar</button>
+                    <button class="btn-view">👁 Ver Perfil</button>
+                </div>
+            </div>
+
+            <!-- Creator Card 3 -->
+            <div class="creator-card">
+                <div class="match-score-badge" style="background: linear-gradient(135deg, #14B8A6 0%, #3B82F6 100%);">88</div>
+                <div class="creator-header">
+                    <div class="creator-avatar-large" style="background: linear-gradient(135deg, #14B8A6 0%, #3B82F6 100%);">
+                        <div class="verified-badge">✓</div>
+                    </div>
+                    <div class="creator-main-info">
+                        <h3>Ana Silva</h3>
+                        <p class="creator-handle">@anaactiva</p>
+                        <div class="creator-niches">
+                            <span class="niche-tag">Yoga</span>
+                            <span class="niche-tag">Wellness</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="creator-stats">
+                    <div class="stat">
+                        <div class="stat-value">156K</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">9.1%</div>
+                        <div class="stat-label">Engagement</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">$950</div>
+                        <div class="stat-label">Por video</div>
+                    </div>
+                </div>
+
+                <p class="creator-bio">
+                    Instructora de yoga certificada. Contenido sobre bienestar físico y mental. Comunidad fiel y comprometida.
+                </p>
+
+                <div class="match-reasons">
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Alto engagement con audiencia femenina
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Contenido premium y auténtico
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Match con valores de marca
+                    </div>
+                </div>
+
+                <div class="creator-actions">
+                    <button class="btn-contact">Contactar</button>
+                    <button class="btn-view">👁 Ver Perfil</button>
+                </div>
+            </div>
+
+            <!-- Creator Card 4 -->
+            <div class="creator-card">
+                <div class="match-score-badge" style="background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);">85</div>
+                <div class="creator-header">
+                    <div class="creator-avatar-large" style="background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);">
+                        <div class="verified-badge">✓</div>
+                    </div>
+                    <div class="creator-main-info">
+                        <h3>David Torres</h3>
+                        <p class="creator-handle">@davidgym</p>
+                        <div class="creator-niches">
+                            <span class="niche-tag">Gym</span>
+                            <span class="niche-tag">Nutrición</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="creator-stats">
+                    <div class="stat">
+                        <div class="stat-value">87K</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">6.8%</div>
+                        <div class="stat-label">Engagement</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">$550</div>
+                        <div class="stat-label">Por video</div>
+                    </div>
+                </div>
+
+                <p class="creator-bio">
+                    Coach de fitness y nutrición. Rutinas de gym y planes alimenticios. Audiencia 70% masculina, 20-40 años.
+                </p>
+
+                <div class="match-reasons">
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Complementa tu campaña deportiva
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Precio competitivo
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Audiencia masculina balanceada
+                    </div>
+                </div>
+
+                <div class="creator-actions">
+                    <button class="btn-contact">Contactar</button>
+                    <button class="btn-view">👁 Ver Perfil</button>
+                </div>
+            </div>
+
+            <!-- Creator Card 5 -->
+            <div class="creator-card">
+                <div class="match-score-badge" style="background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);">82</div>
+                <div class="creator-header">
+                    <div class="creator-avatar-large" style="background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);">
+                        <div class="verified-badge">✓</div>
+                    </div>
+                    <div class="creator-main-info">
+                        <h3>Laura Mendez</h3>
+                        <p class="creator-handle">@laurasport</p>
+                        <div class="creator-niches">
+                            <span class="niche-tag">Crossfit</span>
+                            <span class="niche-tag">Fitness</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="creator-stats">
+                    <div class="stat">
+                        <div class="stat-value">72K</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">7.5%</div>
+                        <div class="stat-label">Engagement</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">$480</div>
+                        <div class="stat-label">Por video</div>
+                    </div>
+                </div>
+
+                <p class="creator-bio">
+                    Atleta de crossfit. WODs, competencias y motivación diaria. Comunidad apasionada por el deporte intenso.
+                </p>
+
+                <div class="match-reasons">
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Nicho deportivo de alto rendimiento
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Mejor precio del match
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Alta autenticidad
+                    </div>
+                </div>
+
+                <div class="creator-actions">
+                    <button class="btn-contact">Contactar</button>
+                    <button class="btn-view">👁 Ver Perfil</button>
+                </div>
+            </div>
+
+            <!-- Creator Card 6 -->
+            <div class="creator-card">
+                <div class="match-score-badge" style="background: linear-gradient(135deg, #10B981 0%, #14B8A6 100%);">80</div>
+                <div class="creator-header">
+                    <div class="creator-avatar-large" style="background: linear-gradient(135deg, #10B981 0%, #14B8A6 100%);">
+                        <div class="verified-badge">✓</div>
+                    </div>
+                    <div class="creator-main-info">
+                        <h3>Miguel Rojas</h3>
+                        <p class="creator-handle">@mikeoutdoor</p>
+                        <div class="creator-niches">
+                            <span class="niche-tag">Outdoor</span>
+                            <span class="niche-tag">Aventura</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="creator-stats">
+                    <div class="stat">
+                        <div class="stat-value">105K</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">5.9%</div>
+                        <div class="stat-label">Engagement</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">$720</div>
+                        <div class="stat-label">Por video</div>
+                    </div>
+                </div>
+
+                <p class="creator-bio">
+                    Aventurero y deportista outdoor. Senderismo, ciclismo de montaña y camping. Audiencia amante de la naturaleza.
+                </p>
+
+                <div class="match-reasons">
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Deportes outdoor y lifestyle
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Contenido de alta calidad visual
+                    </div>
+                    <div class="match-reason">
+                        <span class="reason-icon">✓</span>
+                        Audiencia exploradora
+                    </div>
+                </div>
+
+                <div class="creator-actions">
+                    <button class="btn-contact">Contactar</button>
+                    <button class="btn-view">👁 Ver Perfil</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

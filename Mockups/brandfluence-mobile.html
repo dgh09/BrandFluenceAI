@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrandFluenceAI - Mobile Mockups</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366F1;
+            --secondary: #EC4899;
+            --accent: #14B8A6;
+            --success: #10B981;
+            --dark: #0F172A;
+            --dark-light: #1E293B;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #1a1a2e;
+            color: var(--text);
+            padding: 2rem;
+        }
+
+        .mockup-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        /* Phone Frame */
+        .phone-frame {
+            background: linear-gradient(145deg, #1e1e30, #0a0a15);
+            border-radius: 50px;
+            padding: 15px;
+            box-shadow: 
+                0 50px 100px rgba(0, 0, 0, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            background: #000;
+            border-radius: 0 0 15px 15px;
+            z-index: 10;
+        }
+
+        .phone-notch-speaker {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        .phone-screen {
+            background: var(--dark);
+            border-radius: 40px;
+            overflow: hidden;
+            height: 800px;
+            position: relative;
+        }
+
+        .device-label {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text);
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--dark-light);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0 2rem;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item-mobile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .nav-item-mobile.active {
+            color: var(--primary);
+        }
+
+        .nav-icon-mobile {
+            font-size: 1.5rem;
+        }
+
+        /* Screen Content */
+        .screen-content {
+            padding: 0 1.5rem 6rem;
+            height: calc(100% - 50px);
+            overflow-y: auto;
+        }
+
+        /* Home Screen */
+        .mobile-header {
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .gradient-text-mobile {
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .mobile-cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-mobile {
+            padding: 1rem;
+            border-radius: 15px;
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-mobile:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary-mobile {
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            color: white;
+        }
+
+        .btn-secondary-mobile {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--text);
+        }
+
+        /* Stats Cards Mobile */
+        .stats-mobile {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card-mobile {
+            background: var(--dark-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-number-mobile {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label-mobile {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Creator Card Mobile */
+        .creator-card-mobile {
+            background: var(--dark-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .match-badge-mobile {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            padding: 0.5rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+        }
+
+        .creator-header-mobile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .creator-avatar-mobile {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #14B8A6 0%, #6366F1 100%);
+        }
+
+        .creator-info-mobile h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .creator-handle-mobile {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .creator-stats-mobile {
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 1rem 0;
+        }
+
+        .stat-item-mobile {
+            text-align: center;
+        }
+
+        .stat-value-mobile {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label-small {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .creator-tags-mobile {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag-mobile {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 0.375rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: var(--primary);
+        }
+
+        .btn-contact-mobile {
+            width: 100%;
+            padding: 0.875rem;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Analytics Mobile */
+        .metric-card-mobile {
+            background: var(--dark-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-header-mobile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .metric-title {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .metric-value-large {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            color: var(--success);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Mini Chart */
+        .mini-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 80px;
+            gap: 0.25rem;
+            margin-top: 1rem;
+        }
+
+        .mini-bar {
+            flex: 1;
+            background: linear-gradient(to top, #6366F1, #EC4899);
+            border-radius: 4px 4px 0 0;
+            min-height: 20px;
+        }
+
+        /* Content List Mobile */
+        .content-item-mobile {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--dark);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .content-thumb-mobile {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            flex-shrink: 0;
+        }
+
+        .content-details-mobile {
+            flex: 1;
+        }
+
+        .content-title-mobile {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-stats-mobile {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Filter Chips */
+        .filter-chips {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-chip {
+            background: var(--dark-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .filter-chip.active {
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            border-color: transparent;
+        }
+
+        /* Scrollbar styling */
+        .screen-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .screen-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .screen-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        .filter-chips::-webkit-scrollbar {
+            height: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mockup-container">
+        <!-- iOS Screens -->
+        <h2 class="section-title">📱 iOS Version</h2>
+        <p class="section-subtitle">Diseño adaptado a las Human Interface Guidelines de Apple</p>
+        
+        <div class="devices-grid">
+            <!-- iOS Home -->
+            <div>
+                <div class="phone-frame">
+                    <div class="phone-notch">
+                        <div class="phone-notch-speaker"></div>
+                    </div>
+                    <div class="phone-screen">
+                        <!-- Status Bar -->
+                        <div class="status-bar">
+                            <div class="status-left">
+                                <span>9:41</span>
+                            </div>
+                            <div class="status-right">
+                                <span>📶</span>
+                                <span>📡</span>
+                                <span>🔋</span>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="screen-content">
+                            <div class="mobile-header">
+                                <h1>Conecta con <span class="gradient-text-mobile">Marcas</span></h1>
+                                <p>Encuentra oportunidades perfectas para ti</p>
+                            </div>
+
+                            <div class="mobile-cta-buttons">
+                                <button class="btn-mobile btn-primary-mobile">🎨 Soy Creador</button>
+                                <button class="btn-mobile btn-secondary-mobile">🚀 Soy Marca</button>
+                            </div>
+
+                            <div class="stats-mobile">
+                                <div class="stat-card-mobile">
+                                    <div class="stat-number-mobile">10K+</div>
+                                    <div class="stat-label-mobile">Creadores</div>
+                                </div>
+                                <div class="stat-card-mobile">
+                                    <div class="stat-number-mobile">1K+</div>
+                                    <div class="stat-label-mobile">Marcas</div>
+                                </div>
+                                <div class="stat-card-mobile">
+                                    <div class="stat-number-mobile">95%</div>
+                                    <div class="stat-label-mobile">Satisfacción</div>
+                                </div>
+                                <div class="stat-card-mobile">
+                                    <div class="stat-number-mobile">50K+</div>
+                                    <div class="stat-label-mobile">Campañas</div>
+                                </div>
+                            </div>
+
+                            <h3 style="font-family: 'Sora', sans-serif; font-weight: 700; margin-bottom: 1rem;">✨ Features</h3>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="background: var(--dark-light); padding: 1.25rem; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Matching con IA</h4>
+                                    <p style="color: var(--text-muted); font-size: 0.875rem;">Encuentra matches perfectos automáticamente</p>
+                                </div>
+                                <div style="background: var(--dark-light); padding: 1.25rem; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Analytics Pro</h4>
+                                    <p style="color: var(--text-muted); font-size: 0.875rem;">Métricas en tiempo real de tus campañas</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="mobile-nav">
+                            <div class="nav-item-mobile active">
+                                <span class="nav-icon-mobile">🏠</span>
+                                <span>Inicio</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">🎯</span>
+                                <span>Matches</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">💬</span>
+                                <span>Chat</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">📈</span>
+                                <span>Stats</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">👤</span>
+                                <span>Perfil</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="device-label">iOS - Home Screen</div>
+            </div>
+
+            <!-- iOS Matching -->
+            <div>
+                <div class="phone-frame">
+                    <div class="phone-notch">
+                        <div class="phone-notch-speaker"></div>
+                    </div>
+                    <div class="phone-screen">
+                        <div class="status-bar">
+                            <div class="status-left">
+                                <span>9:41</span>
+                            </div>
+                            <div class="status-right">
+                                <span>📶</span>
+                                <span>📡</span>
+                                <span>🔋</span>
+                            </div>
+                        </div>
+
+                        <div class="screen-content">
+                            <div class="mobile-header">
+                                <h1>🎯 Top Matches</h1>
+                                <p>Creadores perfectos para tu marca</p>
+                            </div>
+
+                            <div class="filter-chips">
+                                <div class="filter-chip active">Todos</div>
+                                <div class="filter-chip">Fitness</div>
+                                <div class="filter-chip">Fashion</div>
+                                <div class="filter-chip">Tech</div>
+                                <div class="filter-chip">Food</div>
+                            </div>
+
+                            <!-- Creator Cards -->
+                            <div class="creator-card-mobile">
+                                <div class="match-badge-mobile">95</div>
+                                <div class="creator-header-mobile">
+                                    <div class="creator-avatar-mobile"></div>
+                                    <div class="creator-info-mobile">
+                                        <h3>María García</h3>
+                                        <p class="creator-handle-mobile">@mariafit</p>
+                                    </div>
+                                </div>
+                                <div class="creator-tags-mobile">
+                                    <span class="tag-mobile">Fitness</span>
+                                    <span class="tag-mobile">Lifestyle</span>
+                                </div>
+                                <div class="creator-stats-mobile">
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">125K</div>
+                                        <div class="stat-label-small">Seguidores</div>
+                                    </div>
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">8.5%</div>
+                                        <div class="stat-label-small">Engagement</div>
+                                    </div>
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">$850</div>
+                                        <div class="stat-label-small">Por video</div>
+                                    </div>
+                                </div>
+                                <button class="btn-contact-mobile">Contactar Ahora</button>
+                            </div>
+
+                            <div class="creator-card-mobile">
+                                <div class="match-badge-mobile" style="background: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);">92</div>
+                                <div class="creator-header-mobile">
+                                    <div class="creator-avatar-mobile" style="background: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);"></div>
+                                    <div class="creator-info-mobile">
+                                        <h3>Carlos Ruiz</h3>
+                                        <p class="creator-handle-mobile">@carlosrunning</p>
+                                    </div>
+                                </div>
+                                <div class="creator-tags-mobile">
+                                    <span class="tag-mobile">Running</span>
+                                    <span class="tag-mobile">Deportes</span>
+                                </div>
+                                <div class="creator-stats-mobile">
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">98K</div>
+                                        <div class="stat-label-small">Seguidores</div>
+                                    </div>
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">7.2%</div>
+                                        <div class="stat-label-small">Engagement</div>
+                                    </div>
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">$650</div>
+                                        <div class="stat-label-small">Por video</div>
+                                    </div>
+                                </div>
+                                <button class="btn-contact-mobile">Contactar Ahora</button>
+                            </div>
+
+                            <div class="creator-card-mobile">
+                                <div class="match-badge-mobile" style="background: linear-gradient(135deg, #14B8A6 0%, #3B82F6 100%);">88</div>
+                                <div class="creator-header-mobile">
+                                    <div class="creator-avatar-mobile" style="background: linear-gradient(135deg, #14B8A6 0%, #3B82F6 100%);"></div>
+                                    <div class="creator-info-mobile">
+                                        <h3>Ana Silva</h3>
+                                        <p class="creator-handle-mobile">@anaactiva</p>
+                                    </div>
+                                </div>
+                                <div class="creator-tags-mobile">
+                                    <span class="tag-mobile">Yoga</span>
+                                    <span class="tag-mobile">Wellness</span>
+                                </div>
+                                <div class="creator-stats-mobile">
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">156K</div>
+                                        <div class="stat-label-small">Seguidores</div>
+                                    </div>
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">9.1%</div>
+                                        <div class="stat-label-small">Engagement</div>
+                                    </div>
+                                    <div class="stat-item-mobile">
+                                        <div class="stat-value-mobile">$950</div>
+                                        <div class="stat-label-small">Por video</div>
+                                    </div>
+                                </div>
+                                <button class="btn-contact-mobile">Contactar Ahora</button>
+                            </div>
+                        </div>
+
+                        <div class="mobile-nav">
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">🏠</span>
+                                <span>Inicio</span>
+                            </div>
+                            <div class="nav-item-mobile active">
+                                <span class="nav-icon-mobile">🎯</span>
+                                <span>Matches</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">💬</span>
+                                <span>Chat</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">📈</span>
+                                <span>Stats</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">👤</span>
+                                <span>Perfil</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="device-label">iOS - Matching Screen</div>
+            </div>
+
+            <!-- iOS Analytics -->
+            <div>
+                <div class="phone-frame">
+                    <div class="phone-notch">
+                        <div class="phone-notch-speaker"></div>
+                    </div>
+                    <div class="phone-screen">
+                        <div class="status-bar">
+                            <div class="status-left">
+                                <span>9:41</span>
+                            </div>
+                            <div class="status-right">
+                                <span>📶</span>
+                                <span>📡</span>
+                                <span>🔋</span>
+                            </div>
+                        </div>
+
+                        <div class="screen-content">
+                            <div class="mobile-header">
+                                <h1>📈 Analytics</h1>
+                                <p>Summer Collection 2024</p>
+                            </div>
+
+                            <!-- Main Metrics -->
+                            <div class="metric-card-mobile">
+                                <div class="metric-header-mobile">
+                                    <span class="metric-title">TOTAL VISTAS</span>
+                                    <span>👁️</span>
+                                </div>
+                                <div class="metric-value-large">2.4M</div>
+                                <div class="metric-change">
+                                    <span>↑</span>
+                                    <span>+15.3% vs semana anterior</span>
+                                </div>
+                                <div class="mini-chart">
+                                    <div class="mini-bar" style="height: 40%;"></div>
+                                    <div class="mini-bar" style="height: 55%;"></div>
+                                    <div class="mini-bar" style="height: 65%;"></div>
+                                    <div class="mini-bar" style="height: 50%;"></div>
+                                    <div class="mini-bar" style="height: 75%;"></div>
+                                    <div class="mini-bar" style="height: 85%;"></div>
+                                    <div class="mini-bar" style="height: 70%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="stats-mobile" style="margin-bottom: 1.5rem;">
+                                <div class="stat-card-mobile">
+                                    <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">❤️</div>
+                                    <div class="stat-number-mobile" style="font-size: 1.5rem;">186K</div>
+                                    <div class="stat-label-mobile">Engagement</div>
+                                </div>
+                                <div class="stat-card-mobile">
+                                    <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">💬</div>
+                                    <div class="stat-number-mobile" style="font-size: 1.5rem;">12.5K</div>
+                                    <div class="stat-label-mobile">Comentarios</div>
+                                </div>
+                            </div>
+
+                            <h3 style="font-family: 'Sora', sans-serif; font-weight: 700; margin-bottom: 1rem;">🔥 Top Content</h3>
+                            
+                            <div class="content-item-mobile">
+                                <div class="content-thumb-mobile"></div>
+                                <div class="content-details-mobile">
+                                    <div class="content-title-mobile">Rutina Matutina #1</div>
+                                    <div class="content-stats-mobile">
+                                        <span>👁️ 856K</span>
+                                        <span>❤️ 45K</span>
+                                        <span>💬 2.1K</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-item-mobile">
+                                <div class="content-thumb-mobile" style="background: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);"></div>
+                                <div class="content-details-mobile">
+                                    <div class="content-title-mobile">Tips de Fitness</div>
+                                    <div class="content-stats-mobile">
+                                        <span>👁️ 642K</span>
+                                        <span>❤️ 38K</span>
+                                        <span>💬 1.8K</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-item-mobile">
+                                <div class="content-thumb-mobile" style="background: linear-gradient(135deg, #14B8A6 0%, #3B82F6 100%);"></div>
+                                <div class="content-details-mobile">
+                                    <div class="content-title-mobile">Unboxing Sneakers</div>
+                                    <div class="content-stats-mobile">
+                                        <span>👁️ 523K</span>
+                                        <span>❤️ 32K</span>
+                                        <span>💬 1.5K</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mobile-nav">
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">🏠</span>
+                                <span>Inicio</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">🎯</span>
+                                <span>Matches</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">💬</span>
+                                <span>Chat</span>
+                            </div>
+                            <div class="nav-item-mobile active">
+                                <span class="nav-icon-mobile">📈</span>
+                                <span>Stats</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">👤</span>
+                                <span>Perfil</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="device-label">iOS - Analytics Screen</div>
+            </div>
+        </div>
+
+        <!-- Android Screens -->
+        <h2 class="section-title">🤖 Android Version</h2>
+        <p class="section-subtitle">Diseño siguiendo Material Design 3</p>
+        
+        <div class="devices-grid">
+            <!-- Android screens would be similar but with Material Design elements -->
+            <!-- For brevity, showing one example -->
+            <div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="status-bar">
+                            <div class="status-left">
+                                <span>9:41</span>
+                            </div>
+                            <div class="status-right">
+                                <span>📶</span>
+                                <span>📡</span>
+                                <span>🔋</span>
+                            </div>
+                        </div>
+
+                        <div class="screen-content">
+                            <div class="mobile-header">
+                                <h1>Conecta con <span class="gradient-text-mobile">Marcas</span></h1>
+                                <p>Encuentra oportunidades perfectas para ti</p>
+                            </div>
+
+                            <div class="mobile-cta-buttons">
+                                <button class="btn-mobile btn-primary-mobile">🎨 Soy Creador</button>
+                                <button class="btn-mobile btn-secondary-mobile">🚀 Soy Marca</button>
+                            </div>
+
+                            <div class="stats-mobile">
+                                <div class="stat-card-mobile">
+                                    <div class="stat-number-mobile">10K+</div>
+                                    <div class="stat-label-mobile">Creadores</div>
+                                </div>
+                                <div class="stat-card-mobile">
+                                    <div class="stat-number-mobile">1K+</div>
+                                    <div class="stat-label-mobile">Marcas</div>
+                                </div>
+                                <div class="stat-card-mobile">
+                                    <div class="stat-number-mobile">95%</div>
+                                    <div class="stat-label-mobile">Satisfacción</div>
+                                </div>
+                                <div class="stat-card-mobile">
+                                    <div class="stat-number-mobile">50K+</div>
+                                    <div class="stat-label-mobile">Campañas</div>
+                                </div>
+                            </div>
+
+                            <h3 style="font-family: 'Sora', sans-serif; font-weight: 700; margin-bottom: 1rem;">✨ Features</h3>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="background: var(--dark-light); padding: 1.25rem; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Matching con IA</h4>
+                                    <p style="color: var(--text-muted); font-size: 0.875rem;">Encuentra matches perfectos automáticamente</p>
+                                </div>
+                                <div style="background: var(--dark-light); padding: 1.25rem; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Analytics Pro</h4>
+                                    <p style="color: var(--text-muted); font-size: 0.875rem;">Métricas en tiempo real de tus campañas</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mobile-nav">
+                            <div class="nav-item-mobile active">
+                                <span class="nav-icon-mobile">🏠</span>
+                                <span>Inicio</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">🎯</span>
+                                <span>Matches</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">💬</span>
+                                <span>Chat</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">📈</span>
+                                <span>Stats</span>
+                            </div>
+                            <div class="nav-item-mobile">
+                                <span class="nav-icon-mobile">👤</span>
+                                <span>Perfil</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="device-label">Android - Home Screen</div>
+            </div>
+
+            <!-- Note: Additional Android screens (Matching & Analytics) would follow the same pattern
+                 but with Material Design-specific elements like FABs, bottom sheets, etc. -->
+        </div>
+    </div>
+</body>
+</html>

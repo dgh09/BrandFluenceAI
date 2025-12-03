@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Flows - BrandFluenceAI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0F172A;
+            color: #F8FAFC;
+            padding: 3rem;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #94A3B8;
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .flow-section {
+            margin-bottom: 5rem;
+        }
+
+        .flow-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+        }
+
+        .flow-step {
+            background: #1E293B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #6366F1;
+        }
+
+        .flow-step:last-child::after {
+            content: '';
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-description {
+            color: #94A3B8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .step-screen {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: #6366F1;
+            font-weight: 600;
+        }
+
+        .user-type-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: #6366F1;
+            margin-bottom: 1rem;
+        }
+
+        .pink-badge {
+            background: rgba(236, 72, 153, 0.2);
+            color: #EC4899;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-box {
+            background: #1E293B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .feature-list li {
+            color: #94A3B8;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: #10B981;
+            font-weight: 700;
+        }
+
+        .interaction-map {
+            background: #1E293B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+
+        .interaction-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .interaction-row:last-child {
+            border-bottom: none;
+        }
+
+        .actor {
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            font-weight: 700;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .actor.creator {
+            background: linear-gradient(135deg, #14B8A6 0%, #6366F1 100%);
+        }
+
+        .action {
+            flex: 1;
+            text-align: center;
+            color: #94A3B8;
+            font-style: italic;
+            padding: 0 2rem;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #6366F1;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-container {
+                flex-direction: column;
+            }
+
+            .flow-step::after {
+                content: '↓';
+                right: auto;
+                bottom: -2rem;
+                top: auto;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ User Flows - BrandFluenceAI</h1>
+        <p class="subtitle">Flujos completos de usuario para MVP v1.0</p>
+
+        <!-- Creator Flow -->
+        <div class="flow-section">
+            <h2 class="flow-title">
+                <span>👤</span>
+                <span>Flujo de Creador de Contenido</span>
+            </h2>
+            <span class="user-type-badge">CREADOR UGC</span>
+            
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Landing & Registro</div>
+                    <div class="step-description">
+                        El creador llega al landing, ve el valor propuesto y decide registrarse como creador.
+                    </div>
+                    <div class="step-screen">📱 brandfluence-landing.html</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Onboarding</div>
+                    <div class="step-description">
+                        Completa perfil: foto, bio, nichos, redes sociales, tarifas, portfolio (3+ ejemplos).
+                    </div>
+                    <div class="step-screen">📋 Formulario de Perfil</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Dashboard de Oportunidades</div>
+                    <div class="step-description">
+                        Ve propuestas de marcas, notificaciones de matches, y estadísticas de su perfil.
+                    </div>
+                    <div class="step-screen">🎯 Dashboard Principal</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Revisar Propuestas</div>
+                    <div class="step-description">
+                        Recibe notificación de marca interesada. Revisa brief, presupuesto, deadline.
+                    </div>
+                    <div class="step-screen">💬 Vista de Propuesta</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Aceptar & Firmar</div>
+                    <div class="step-description">
+                        Acepta términos, firma contrato digital, recibe confirmación de campaña.
+                    </div>
+                    <div class="step-screen">📝 Gestión de Contratos</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <div class="step-title">Crear Contenido</div>
+                    <div class="step-description">
+                        Crea contenido según brief, lo sube para revisión de la marca.
+                    </div>
+                    <div class="step-screen">📤 Upload de Deliverables</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">7</div>
+                    <div class="step-title">Publicar & Reportar</div>
+                    <div class="step-description">
+                        Publica contenido, registra links y métricas finales en la plataforma.
+                    </div>
+                    <div class="step-screen">📊 Registro de Resultados</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">8</div>
+                    <div class="step-title">Recibir Pago & Reseña</div>
+                    <div class="step-description">
+                        Marca aprueba, recibe pago, ambos se califican mutuamente.
+                    </div>
+                    <div class="step-screen">💰 Pagos & ⭐ Reseñas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brand Flow -->
+        <div class="flow-section">
+            <h2 class="flow-title">
+                <span>🏢</span>
+                <span>Flujo de Marca/Empresa</span>
+            </h2>
+            <span class="user-type-badge pink-badge">MARCA</span>
+            
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Landing & Registro</div>
+                    <div class="step-description">
+                        Marca descubre la plataforma, ve casos de éxito, decide registrarse.
+                    </div>
+                    <div class="step-screen">📱 brandfluence-landing.html</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Setup de Perfil</div>
+                    <div class="step-description">
+                        Completa: logo, descripción de empresa, presupuesto habitual, nichos objetivo.
+                    </div>
+                    <div class="step-screen">🏢 Perfil de Marca</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Matching Inteligente</div>
+                    <div class="step-description">
+                        Define campaña y preferencias. IA recomienda top creadores con score de match.
+                    </div>
+                    <div class="step-screen">🎯 brandfluence-matching.html</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Revisar Perfiles</div>
+                    <div class="step-description">
+                        Explora perfiles recomendados, ve portfolio, stats, reseñas de otros usuarios.
+                    </div>
+                    <div class="step-screen">👤 Vista de Perfil Creador</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Crear Propuesta</div>
+                    <div class="step-description">
+                        Selecciona creador(es), crea brief (con ayuda de IA), define presupuesto y deadline.
+                    </div>
+                    <div class="step-screen">📋 Creación de Campaña</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <div class="step-title">Negociar & Firmar</div>
+                    <div class="step-description">
+                        Creador acepta o negocia términos. Ambas partes firman contrato digital.
+                    </div>
+                    <div class="step-screen">✍️ Gestión de Contratos</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">7</div>
+                    <div class="step-title">Revisar Entregables</div>
+                    <div class="step-description">
+                        Creador sube contenido. Marca revisa, da feedback o aprueba.
+                    </div>
+                    <div class="step-screen">✅ Revisión de Contenido</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">8</div>
+                    <div class="step-title">Analizar Resultados</div>
+                    <div class="step-description">
+                        Ve métricas en tiempo real: vistas, engagement, conversiones, ROI.
+                    </div>
+                    <div class="step-screen">📈 brandfluence-analytics.html</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">9</div>
+                    <div class="step-title">Pagar & Calificar</div>
+                    <div class="step-description">
+                        Procesa pago automático, deja reseña del creador, cierra campaña.
+                    </div>
+                    <div class="step-screen">💳 Pagos & ⭐ Reseñas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Breakdown -->
+        <div class="flow-section">
+            <h2 class="flow-title">
+                <span>🎯</span>
+                <span>Desglose de Features por Pantalla</span>
+            </h2>
+
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">🏠</div>
+                    <div class="feature-title">Landing Page</div>
+                    <ul class="feature-list">
+                        <li>Hero con propuesta de valor</li>
+                        <li>Stats sociales (10K creadores, etc.)</li>
+                        <li>Grid de features con iconos</li>
+                        <li>CTA dual (Creador/Marca)</li>
+                        <li>Footer con links</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Matching Dashboard</div>
+                    <ul class="feature-list">
+                        <li>AI Insights panel</li>
+                        <li>Filtros avanzados (8+ criterios)</li>
+                        <li>Match score 0-100</li>
+                        <li>Cards con stats completas</li>
+                        <li>Razones de match explicadas</li>
+                        <li>Botones de contacto rápido</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">Analytics Dashboard</div>
+                    <ul class="feature-list">
+                        <li>Overview metrics (4 principales)</li>
+                        <li>Chart de vistas por día</li>
+                        <li>Top content ranking</li>
+                        <li>Donut chart de engagement</li>
+                        <li>Funnel de conversión</li>
+                        <li>Audience demographics</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <div class="feature-icon">👤</div>
+                    <div class="feature-title">Perfil de Creador</div>
+                    <ul class="feature-list">
+                        <li>Avatar + verificación</li>
+                        <li>Stats principales visibles</li>
+                        <li>Multi-nicho con tags</li>
+                        <li>Links a redes sociales</li>
+                        <li>Portfolio de trabajos</li>
+                        <li>Sistema de reseñas</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-title">Gestión de Campañas</div>
+                    <ul class="feature-list">
+                        <li>Brief con IA (GPT-4)</li>
+                        <li>Timeline de entregas</li>
+                        <li>Upload de archivos</li>
+                        <li>Sistema de aprobación</li>
+                        <li>Chat integrado</li>
+                        <li>Tracking de estado</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <div class="feature-icon">💳</div>
+                    <div class="feature-title">Pagos & Contratos</div>
+                    <ul class="feature-list">
+                        <li>Contrato auto-generado</li>
+                        <li>Firma digital simulada</li>
+                        <li>Escrow de pagos</li>
+                        <li>Historial de transacciones</li>
+                        <li>Export de facturas</li>
+                        <li>Multi-moneda (futuro)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interaction Map -->
+        <div class="flow-section">
+            <h2 class="flow-title">
+                <span>🔄</span>
+                <span>Mapa de Interacciones Principales</span>
+            </h2>
+
+            <div class="interaction-map">
+                <div class="interaction-row">
+                    <div class="actor">MARCA</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Crea campaña con preferencias</div>
+                    <span class="arrow">→</span>
+                    <div class="actor creator">IA MATCHING</div>
+                </div>
+
+                <div class="interaction-row">
+                    <div class="actor creator">IA MATCHING</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Calcula scores y recomienda</div>
+                    <span class="arrow">→</span>
+                    <div class="actor">MARCA</div>
+                </div>
+
+                <div class="interaction-row">
+                    <div class="actor">MARCA</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Envía propuesta con brief</div>
+                    <span class="arrow">→</span>
+                    <div class="actor creator">CREADOR</div>
+                </div>
+
+                <div class="interaction-row">
+                    <div class="actor creator">CREADOR</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Acepta y firma contrato</div>
+                    <span class="arrow">→</span>
+                    <div class="actor">PLATAFORMA</div>
+                </div>
+
+                <div class="interaction-row">
+                    <div class="actor creator">CREADOR</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Sube contenido creado</div>
+                    <span class="arrow">→</span>
+                    <div class="actor">MARCA</div>
+                </div>
+
+                <div class="interaction-row">
+                    <div class="actor">MARCA</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Aprueba y procesa pago</div>
+                    <span class="arrow">→</span>
+                    <div class="actor">PLATAFORMA</div>
+                </div>
+
+                <div class="interaction-row">
+                    <div class="actor">PLATAFORMA</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Libera fondos y solicita reseñas</div>
+                    <span class="arrow">→</span>
+                    <div class="actor creator">AMBOS</div>
+                </div>
+
+                <div class="interaction-row">
+                    <div class="actor creator">CREADOR</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Registra métricas de publicación</div>
+                    <span class="arrow">→</span>
+                    <div class="actor">ANALYTICS</div>
+                </div>
+
+                <div class="interaction-row">
+                    <div class="actor creator">ANALYTICS</div>
+                    <span class="arrow">→</span>
+                    <div class="action">Muestra dashboard en tiempo real</div>
+                    <span class="arrow">→</span>
+                    <div class="actor">MARCA</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Screens Summary -->
+        <div class="flow-section">
+            <h2 class="flow-title">
+                <span>📱</span>
+                <span>Resumen de Pantallas Clave</span>
+            </h2>
+
+            <div style="background: #1E293B; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;">
+                <table style="width: 100%; color: #F8FAFC;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid rgba(99, 102, 241, 0.3);">
+                            <th style="padding: 1rem; text-align: left;">Pantalla</th>
+                            <th style="padding: 1rem; text-align: left;">Archivo</th>
+                            <th style="padding: 1rem; text-align: left;">Usuario</th>
+                            <th style="padding: 1rem; text-align: left;">Prioridad MVP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <td style="padding: 1rem;">Landing Page</td>
+                            <td style="padding: 1rem; color: #6366F1;">brandfluence-landing.html</td>
+                            <td style="padding: 1rem;">Ambos</td>
+                            <td style="padding: 1rem; color: #10B981; font-weight: 700;">MUST</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <td style="padding: 1rem;">Matching Dashboard</td>
+                            <td style="padding: 1rem; color: #6366F1;">brandfluence-matching.html</td>
+                            <td style="padding: 1rem;">Marca</td>
+                            <td style="padding: 1rem; color: #10B981; font-weight: 700;">MUST</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <td style="padding: 1rem;">Analytics Dashboard</td>
+                            <td style="padding: 1rem; color: #6366F1;">brandfluence-analytics.html</td>
+                            <td style="padding: 1rem;">Ambos</td>
+                            <td style="padding: 1rem; color: #F59E0B; font-weight: 700;">SHOULD</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <td style="padding: 1rem;">Mobile Screens</td>
+                            <td style="padding: 1rem; color: #6366F1;">brandfluence-mobile.html</td>
+                            <td style="padding: 1rem;">Ambos</td>
+                            <td style="padding: 1rem; color: #10B981; font-weight: 700;">MUST</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <td style="padding: 1rem;">Perfil Creador</td>
+                            <td style="padding: 1rem; color: #94A3B8;">Por implementar</td>
+                            <td style="padding: 1rem;">Creador</td>
+                            <td style="padding: 1rem; color: #F59E0B; font-weight: 700;">SHOULD</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <td style="padding: 1rem;">Gestión de Campañas</td>
+                            <td style="padding: 1rem; color: #94A3B8;">Por implementar</td>
+                            <td style="padding: 1rem;">Ambos</td>
+                            <td style="padding: 1rem; color: #10B981; font-weight: 700;">MUST</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem;">Pagos & Contratos</td>
+                            <td style="padding: 1rem; color: #94A3B8;">Por implementar</td>
+                            <td style="padding: 1rem;">Ambos</td>
+                            <td style="padding: 1rem; color: #10B981; font-weight: 700;">MUST</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; color: #94A3B8;">
+            <p style="margin-bottom: 1rem;">🎨 Diseñado para BrandFluenceAI MVP v1.0</p>
+            <p>Stack: React + NestJS + MongoDB + OpenAI | Diciembre 2024</p>
+        </div>
+    </div>
+</body>
+</html>

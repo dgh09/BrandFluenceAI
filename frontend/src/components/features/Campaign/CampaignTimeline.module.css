@@ -1,0 +1,87 @@
+.timeline {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 1.5rem 0;
+}
+
+.events {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.event {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+  z-index: 1;
+  background: var(--bg-primary);
+}
+
+.line {
+  width: 2px;
+  flex: 1;
+  background: var(--border);
+  margin-top: 0.5rem;
+  min-height: 2rem;
+}
+
+.content {
+  flex: 1;
+  padding-bottom: 1.5rem;
+}
+
+.eventHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.eventDescription {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.eventDate {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.eventUser {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}

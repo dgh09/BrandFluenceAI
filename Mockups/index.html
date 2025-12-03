@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrandFluenceAI - Mockups Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@800&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0F172A;
+            color: #F8FAFC;
+            min-height: 100vh;
+            padding: 3rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #94A3B8;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .version {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #6366F1;
+            margin-bottom: 3rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: #1E293B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #6366F1;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-description {
+            color: #94A3B8;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #6366F1;
+        }
+
+        .tag.pink {
+            background: rgba(236, 72, 153, 0.2);
+            color: #EC4899;
+        }
+
+        .tag.green {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+        }
+
+        .doc-card {
+            background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: #1E293B;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #94A3B8;
+        }
+
+        .footer a {
+            color: #6366F1;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 BrandFluenceAI</h1>
+        <p class="subtitle">Mockups de Alta Fidelidad - MVP v1.0</p>
+        <span class="version">Diciembre 2024 | Ready for Development</span>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Mockups Web</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Screens Mobile</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Documentos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">MVP Coverage</div>
+            </div>
+        </div>
+
+        <!-- Web Mockups -->
+        <div class="section">
+            <h2 class="section-title">
+                <span>💻</span>
+                <span>Mockups Web - Desktop</span>
+            </h2>
+            <div class="cards-grid">
+                <a href="brandfluence-landing.html" class="card">
+                    <div class="card-icon">🏠</div>
+                    <div class="card-title">Landing Page</div>
+                    <div class="card-description">
+                        Página principal responsive con hero section, stats, features y CTA. 
+                        Punto de entrada para creadores y marcas.
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">Responsive</span>
+                        <span class="tag green">MUST</span>
+                        <span class="tag">Public</span>
+                    </div>
+                </a>
+
+                <a href="brandfluence-matching.html" class="card">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-title">Matching Inteligente</div>
+                    <div class="card-description">
+                        Dashboard principal con filtros avanzados, AI insights y grid de creadores 
+                        con match scores. Feature más importante del MVP.
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag pink">Featured</span>
+                        <span class="tag green">MUST</span>
+                        <span class="tag">Brand</span>
+                    </div>
+                </a>
+
+                <a href="brandfluence-analytics.html" class="card">
+                    <div class="card-icon">📈</div>
+                    <div class="card-title">Analytics Dashboard</div>
+                    <div class="card-description">
+                        Panel de métricas inspirado en TikTok. Overview stats, charts, 
+                        top content y audience insights detallados.
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">TikTok Style</span>
+                        <span class="tag">SHOULD</span>
+                        <span class="tag">Both</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Mockups -->
+        <div class="section">
+            <h2 class="section-title">
+                <span>📱</span>
+                <span>Mockups Mobile - iOS & Android</span>
+            </h2>
+            <div class="cards-grid">
+                <a href="brandfluence-mobile.html" class="card">
+                    <div class="card-icon">📲</div>
+                    <div class="card-title">Mobile Screens</div>
+                    <div class="card-description">
+                        6 pantallas móviles completas: Home, Matching y Analytics 
+                        para iOS y Android con phone frames realistas.
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">iOS</span>
+                        <span class="tag">Android</span>
+                        <span class="tag green">MUST</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <div class="section">
+            <h2 class="section-title">
+                <span>📚</span>
+                <span>Documentación Técnica</span>
+            </h2>
+            <div class="cards-grid">
+                <a href="README.md" class="card doc-card" target="_blank">
+                    <div class="card-icon">📋</div>
+                    <div class="card-title">README Principal</div>
+                    <div class="card-description">
+                        Guía completa de mockups: descripción general, paleta de colores, 
+                        tipografía, componentes y especificaciones de diseño.
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag green">Essential</span>
+                        <span class="tag">Markdown</span>
+                    </div>
+                </a>
+
+                <a href="user-flows.html" class="card doc-card">
+                    <div class="card-icon">🗺️</div>
+                    <div class="card-title">User Flows</div>
+                    <div class="card-description">
+                        Flujos completos de usuario para creadores y marcas. 
+                        Incluye mapa de interacciones y desglose de features.
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag pink">Interactive</span>
+                        <span class="tag">Visual</span>
+                    </div>
+                </a>
+
+                <a href="TECH-SPECS.md" class="card doc-card" target="_blank">
+                    <div class="card-icon">⚙️</div>
+                    <div class="card-title">Specs Técnicas</div>
+                    <div class="card-description">
+                        Guía completa para desarrolladores: componentes React, 
+                        GraphQL schemas, rutas, state management e integraciones IA.
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">Developers</span>
+                        <span class="tag green">Critical</span>
+                        <span class="tag">Markdown</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="section">
+            <h2 class="section-title">
+                <span>🛠️</span>
+                <span>Stack Tecnológico</span>
+            </h2>
+            <div style="background: #1E293B; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div>
+                        <h3 style="color: #6366F1; margin-bottom: 1rem; font-family: 'Sora', sans-serif;">Frontend</h3>
+                        <ul style="list-style: none; color: #94A3B8; line-height: 2;">
+                            <li>✓ React.js</li>
+                            <li>✓ TypeScript</li>
+                            <li>✓ Apollo Client</li>
+                            <li>✓ Tailwind CSS</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #EC4899; margin-bottom: 1rem; font-family: 'Sora', sans-serif;">Backend</h3>
+                        <ul style="list-style: none; color: #94A3B8; line-height: 2;">
+                            <li>✓ Node.js + NestJS</li>
+                            <li>✓ GraphQL</li>
+                            <li>✓ MongoDB + Mongoose</li>
+                            <li>✓ JWT / OAuth2</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #14B8A6; margin-bottom: 1rem; font-family: 'Sora', sans-serif;">AI & Cloud</h3>
+                        <ul style="list-style: none; color: #94A3B8; line-height: 2;">
+                            <li>✓ OpenAI GPT-4</li>
+                            <li>✓ AWS S3</li>
+                            <li>✓ Docker</li>
+                            <li>✓ Kubernetes</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #F59E0B; margin-bottom: 1rem; font-family: 'Sora', sans-serif;">Design</h3>
+                        <ul style="list-style: none; color: #94A3B8; line-height: 2;">
+                            <li>✓ Sora (Display)</li>
+                            <li>✓ DM Sans (Body)</li>
+                            <li>✓ Modern/Minimalist</li>
+                            <li>✓ Dark Theme</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="section">
+            <h2 class="section-title">
+                <span>⚡</span>
+                <span>Quick Access</span>
+            </h2>
+            <div style="background: linear-gradient(135deg, #1E293B 0%, #334155 100%); border-radius: 20px; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <a href="brandfluence-matching.html" style="background: rgba(99, 102, 241, 0.1); padding: 1rem; border-radius: 12px; text-decoration: none; color: #6366F1; font-weight: 700; text-align: center; border: 1px solid rgba(99, 102, 241, 0.3);">
+                    🎯 Ver Matching
+                </a>
+                <a href="brandfluence-analytics.html" style="background: rgba(236, 72, 153, 0.1); padding: 1rem; border-radius: 12px; text-decoration: none; color: #EC4899; font-weight: 700; text-align: center; border: 1px solid rgba(236, 72, 153, 0.3);">
+                    📈 Ver Analytics
+                </a>
+                <a href="brandfluence-mobile.html" style="background: rgba(20, 184, 166, 0.1); padding: 1rem; border-radius: 12px; text-decoration: none; color: #14B8A6; font-weight: 700; text-align: center; border: 1px solid rgba(20, 184, 166, 0.3);">
+                    📱 Ver Mobile
+                </a>
+                <a href="user-flows.html" style="background: rgba(245, 158, 11, 0.1); padding: 1rem; border-radius: 12px; text-decoration: none; color: #F59E0B; font-weight: 700; text-align: center; border: 1px solid rgba(245, 158, 11, 0.3);">
+                    🗺️ Ver Flows
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p style="margin-bottom: 0.5rem;">🎨 Diseñado para <strong>BrandFluenceAI</strong> MVP v1.0</p>
+            <p style="margin-bottom: 0.5rem;">Stack: React + NestJS + MongoDB + OpenAI</p>
+            <p>Diciembre 2024 | <a href="README.md">Ver Documentación Completa</a></p>
+        </div>
+    </div>
+</body>
+</html>
