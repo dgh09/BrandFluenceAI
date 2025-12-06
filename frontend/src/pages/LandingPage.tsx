@@ -10,7 +10,9 @@ export const LandingPage: React.FC = () => {
       {/* Navigation */}
       <nav className={styles.nav}>
         <div className={styles.navContainer}>
-          <div className={styles.logo}>BrandFluenceAI</div>
+          <div className={styles.logo}>
+            <img src="/brandfluence-logo-full.svg" alt="BrandFluenceAI" />
+          </div>
           <div className={styles.navLinks}>
             <a href="#features">Features</a>
             <a href="#how-it-works">Cómo funciona</a>
@@ -228,7 +230,7 @@ export const LandingPage: React.FC = () => {
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
           <div className={styles.footerBrand}>
-            <h3>BrandFluenceAI</h3>
+            <img src="/brandfluence-logo-full.svg" alt="BrandFluenceAI" className={styles.footerLogo} />
             <p>
               La plataforma que conecta marcas y creadores con inteligencia
               artificial. Colaboraciones auténticas, eficientes y virales.

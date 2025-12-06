@@ -29,8 +29,7 @@ export const Sidebar: React.FC = () => {
     <aside className={styles.sidebar}>
       {/* Logo */}
       <div className={styles.logo}>
-        <span className={styles.logoIcon}>🚀</span>
-        <span className={styles.logoText}>BrandFluenceAI</span>
+        <img src="/brandfluence-logo-full.svg" alt="BrandFluenceAI" className={styles.logoImage} />
       </div>
 
       {/* User Profile */}

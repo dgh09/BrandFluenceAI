@@ -20,6 +20,11 @@
   margin-bottom: 2rem;
 }
 
+.logoImage {
+  width: 220px;
+  height: auto;
+}
+
 .logoIcon {
   font-size: 2rem;
 }
