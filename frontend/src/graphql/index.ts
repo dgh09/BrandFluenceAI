@@ -6,5 +6,9 @@
 // Mutations
 export * from './mutations/onboarding';
 
+// Queries
+export * from './queries/matching';
+
 // Types
 export * from './types/onboarding';
+export * from './types/matching';
