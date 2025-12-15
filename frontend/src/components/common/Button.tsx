@@ -44,6 +44,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
   /** Additional CSS classes to apply */
   className?: string;
+
+  /** Render as a different element (for styling purposes) */
+  as?: 'button' | 'span';
 }
 
 /**
@@ -80,14 +83,17 @@ export const Button: React.FC<ButtonProps> = ({
   size = 'md',
   children,
   className = '',
+  as = 'button',
   ...props
 }) => {
   // Combine all CSS classes: base + variant + size + custom
   const classes = `${styles.button} ${styles[variant]} ${styles[size]} ${className}`.trim();
 
+  const Component = as;
+
   return (
-    <button className={classes} {...props}>
+    <Component className={classes} {...(as === 'button' ? props : {})}>
       {children}
-    </button>
+    </Component>
   );
 };

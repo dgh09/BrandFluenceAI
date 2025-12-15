@@ -3,8 +3,11 @@ import type { CampaignStatus, DeliverableStatus } from '../../../types';
 import styles from './Badge.module.css';
 
 interface BadgeProps {
-  status: CampaignStatus | DeliverableStatus | string;
+  status?: CampaignStatus | DeliverableStatus | string;
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'gray';
   size?: 'sm' | 'md' | 'lg';
+  children?: React.ReactNode;
+  onRemove?: () => void;
 }
 
 const statusConfig: Record<string, { label: string; color: string }> = {
@@ -22,12 +25,44 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   rejected: { label: 'Rechazado', color: 'red' }
 };
 
-export const Badge: React.FC<BadgeProps> = ({ status, size = 'md' }) => {
-  const config = statusConfig[status] || { label: status, color: 'gray' };
+const variantColorMap: Record<string, string> = {
+  primary: 'blue',
+  secondary: 'gray',
+  success: 'green',
+  warning: 'yellow',
+  error: 'red',
+  gray: 'gray'
+};
+
+export const Badge: React.FC<BadgeProps> = ({
+  status,
+  variant,
+  size = 'md',
+  children,
+  onRemove
+}) => {
+  // If children is provided, use it. Otherwise, use status label
+  let label = children;
+  let color = variant ? variantColorMap[variant] : 'gray';
+
+  if (status && !children) {
+    const config = statusConfig[status] || { label: status, color: 'gray' };
+    label = config.label;
+    color = config.color;
+  }
 
   return (
-    <span className={`${styles.badge} ${styles[config.color]} ${styles[size]}`}>
-      {config.label}
+    <span className={`${styles.badge} ${styles[color]} ${styles[size]}`}>
+      {label}
+      {onRemove && (
+        <button
+          onClick={onRemove}
+          className={styles.removeButton}
+          type="button"
+        >
+          ✕
+        </button>
+      )}
     </span>
   );
 };

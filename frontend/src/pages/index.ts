@@ -13,6 +13,11 @@
 // Public Pages (Unauthenticated)
 export { LandingPage } from './LandingPage';
 export { LoginPage } from './LoginPage';
+export { RegisterPage } from './RegisterPage';
+
+// Onboarding Pages
+export { OnboardingCreatorPage } from './OnboardingCreatorPage';
+export { OnboardingBrandPage } from './OnboardingBrandPage';
 
 // Protected Pages (Authenticated)
 export { MatchingPage } from './MatchingPage';

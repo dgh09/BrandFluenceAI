@@ -7,6 +7,9 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import {
   LandingPage,
   LoginPage,
+  RegisterPage,
+  OnboardingCreatorPage,
+  OnboardingBrandPage,
   MatchingPage,
   AnalyticsPage,
   CreatorProfilePage,
@@ -22,6 +25,23 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/onboarding/creator"
+              element={
+                <ProtectedRoute>
+                  <OnboardingCreatorPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/onboarding/brand"
+              element={
+                <ProtectedRoute>
+                  <OnboardingBrandPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/matching"
               element={

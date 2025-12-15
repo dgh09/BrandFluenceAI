@@ -22,7 +22,7 @@ export const LandingPage: React.FC = () => {
                 Iniciar Sesión
               </Button>
             </Link>
-            <Link to="/login">
+            <Link to="/register">
               <Button variant="primary" size="sm">
                 Empezar Gratis
               </Button>
@@ -44,12 +44,12 @@ export const LandingPage: React.FC = () => {
               Matching automático, gestión simplificada y resultados medibles.
             </p>
             <div className={styles.heroButtons}>
-              <Link to="/login">
+              <Link to="/register">
                 <Button variant="primary" size="lg">
                   Soy Creador 🎨
                 </Button>
               </Link>
-              <Link to="/login">
+              <Link to="/register">
                 <Button variant="primary" size="lg">
                   Soy Marca 🚀
                 </Button>
@@ -211,7 +211,7 @@ export const LandingPage: React.FC = () => {
               viral
             </p>
             <div className={styles.ctaButtons}>
-              <Link to="/login">
+              <Link to="/register">
                 <Button variant="white" size="lg">
                   Registrarse Gratis
                 </Button>

@@ -280,3 +280,23 @@ export interface AIInsight {
   title: string;
   description: string;
 }
+
+/**
+ * Chat Types
+ */
+export interface ChatFile {
+  name: string;
+  size: number;
+  type: string;
+  url: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  senderId: string;
+  senderName: string;
+  content: string;
+  timestamp: string;
+  read: boolean;
+  file?: ChatFile;
+}

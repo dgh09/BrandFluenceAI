@@ -9,9 +9,18 @@ interface AuthUser {
   avatar?: string;
 }
 
+interface RegisterData {
+  email: string;
+  password: string;
+  tipo: UserType;
+  companyName?: string;
+  position?: string;
+}
+
 interface AuthContextType {
   user: AuthUser | null;
   login: (email: string, password: string) => boolean;
+  register: (data: RegisterData) => boolean;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -70,9 +79,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return false;
   };
 
+  const register = (data: RegisterData): boolean => {
+    // Check if email already exists
+    const existingUser = mockUsers.find(u => u.email === data.email);
+    if (existingUser) {
+      return false; // Email already registered
+    }
+
+    // Create new user
+    const newUser: AuthUser = {
+      id: `${data.tipo}-${Date.now()}`,
+      email: data.email,
+      nombre: data.companyName || 'Nuevo Usuario',
+      tipo: data.tipo,
+      avatar: ''
+    };
+
+    // In a real app, this would be saved to database
+    // For now, we'll just add it to localStorage for the session
+    setUser(newUser);
+    localStorage.setItem('auth_user', JSON.stringify(newUser));
+    localStorage.setItem('pending_onboarding', 'true');
+
+    return true;
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('auth_user');
+    localStorage.removeItem('pending_onboarding');
   };
 
   return (
@@ -80,6 +115,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         user,
         login,
+        register,
         logout,
         isAuthenticated: !!user
       }}

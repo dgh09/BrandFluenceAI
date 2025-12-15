@@ -2,6 +2,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   font-weight: 500;
   border-radius: 6px;
   white-space: nowrap;
@@ -53,4 +54,24 @@
 .badge.red {
   background: rgba(239, 68, 68, 0.1);
   color: #EF4444;
+}
+
+.removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: currentColor;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  font-size: 0.75rem;
+}
+
+.removeButton:hover {
+  opacity: 1;
 }

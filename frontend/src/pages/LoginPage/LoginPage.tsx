@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button, FormInput } from '../../components/common';
 import styles from './LoginPage.module.css';
@@ -136,7 +136,7 @@ export const LoginPage: React.FC = () => {
 
           {/* Footer */}
           <div className={styles.footer}>
-            <p>¿No tienes cuenta? <a href="#">Regístrate aquí</a></p>
+            <p>¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link></p>
           </div>
         </div>
 

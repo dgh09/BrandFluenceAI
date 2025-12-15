@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sidebar } from '../components/layout';
 import { CreatorCard } from '../components/common';
 import { MatchingFilters } from '../components/features/MatchingFilters';
+import { CreateCampaignModal } from '../components/features/Campaign';
 import { mockCreators, mockAIInsights } from '../data/mockData';
 import { useMatchingFilters } from '../hooks/useMatchingFilters';
 import styles from './MatchingPage.module.css';
@@ -18,6 +19,27 @@ export const MatchingPage: React.FC = () => {
     setSortBy,
     activeFiltersCount
   } = useMatchingFilters(mockCreators);
+
+  // Campaign modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCreator, setSelectedCreator] = useState<{ id: string; name: string } | null>(null);
+
+  const handleContactClick = (creatorId: string) => {
+    const creator = mockCreators.find(c => c.id === creatorId);
+    if (creator) {
+      setSelectedCreator({ id: creator.id, name: creator.nombre });
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleCampaignSubmit = (data: any) => {
+    console.log('Campaign proposal submitted:', {
+      creatorId: selectedCreator?.id,
+      ...data
+    });
+    // TODO: Integrate with GraphQL mutation to create campaign
+    alert(`¡Propuesta enviada a ${selectedCreator?.name}!`);
+  };
 
   return (
     <div className={styles.matchingPage}>
@@ -94,7 +116,7 @@ export const MatchingPage: React.FC = () => {
                   <CreatorCard
                     key={creator.id}
                     creator={creator}
-                    onContact={(id) => console.log('Contact', id)}
+                    onContact={handleContactClick}
                     onViewProfile={(id) => navigate(`/creator/${id}`)}
                   />
                 ))}
@@ -112,6 +134,17 @@ export const MatchingPage: React.FC = () => {
           </div>
         </div>
       </main>
+
+      {/* Campaign Creation Modal */}
+      {selectedCreator && (
+        <CreateCampaignModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          creatorId={selectedCreator.id}
+          creatorName={selectedCreator.name}
+          onSubmit={handleCampaignSubmit}
+        />
+      )}
     </div>
   );
 };

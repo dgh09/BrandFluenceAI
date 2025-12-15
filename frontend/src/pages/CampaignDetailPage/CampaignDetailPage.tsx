@@ -3,20 +3,90 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Sidebar } from '../../components/layout';
 import { Button, Badge } from '../../components/common';
 import { CampaignTimeline } from '../../components/features/Campaign';
+import { ChatWindow } from '../../components/features/Chat';
 import { ReviewForm, type ReviewFormData } from '../../components/features/Review';
+import { useAuth } from '../../contexts/AuthContext';
+import type { ChatMessage } from '../../types';
 import { mockCampaigns } from '../../data/mockData';
 import styles from './CampaignDetailPage.module.css';
+
+type TabType = 'overview' | 'chat';
 
 export const CampaignDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const campaign = mockCampaigns.find(c => c._id === id);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: '1',
+      senderId: campaign?.participants.brandId || 'brand-123',
+      senderName: campaign?.participants.brandName || 'Marca Demo',
+      content: '¡Hola! Me gustaría coordinar los detalles de la campaña contigo.',
+      timestamp: new Date(Date.now() - 86400000 * 2).toISOString(),
+      read: true
+    },
+    {
+      id: '2',
+      senderId: campaign?.participants.creatorIds[0] || 'creator-456',
+      senderName: campaign?.participants.creatorNames[0] || 'Creador Demo',
+      content: '¡Claro! Estoy muy emocionado por trabajar en esta campaña. ¿Cuándo podemos empezar?',
+      timestamp: new Date(Date.now() - 86400000).toISOString(),
+      read: true
+    }
+  ]);
+  const [isOtherUserTyping, setIsOtherUserTyping] = useState(false);
 
   const handleSubmitReview = (reviewData: ReviewFormData) => {
     console.log('Review submitted:', reviewData);
     // In a real app, this would submit to the backend
     alert('¡Gracias por tu reseña! Se ha enviado exitosamente.');
+  };
+
+  const handleSendMessage = (content: string, file?: File) => {
+    const newMessage: ChatMessage = {
+      id: `msg-${Date.now()}`,
+      senderId: user?.id || 'current-user',
+      senderName: user?.nombre || 'Usuario',
+      content,
+      timestamp: new Date().toISOString(),
+      read: false,
+      file: file ? {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        url: URL.createObjectURL(file)
+      } : undefined
+    };
+
+    setMessages(prev => [...prev, newMessage]);
+
+    // Simulate typing indicator and response (for demo purposes)
+    if (content.toLowerCase().includes('hola') || content.toLowerCase().includes('cuando')) {
+      setTimeout(() => setIsOtherUserTyping(true), 1000);
+      setTimeout(() => {
+        setIsOtherUserTyping(false);
+        const responseMessage: ChatMessage = {
+          id: `msg-${Date.now()}-response`,
+          senderId: user?.tipo === 'creator' ? campaign?.participants.brandId || 'brand-123' : campaign?.participants.creatorIds[0] || 'creator-456',
+          senderName: user?.tipo === 'creator' ? campaign?.participants.brandName || 'Marca Demo' : campaign?.participants.creatorNames[0] || 'Creador Demo',
+          content: 'Gracias por tu mensaje. Te responderé pronto con más detalles.',
+          timestamp: new Date().toISOString(),
+          read: false
+        };
+        setMessages(prev => [...prev, responseMessage]);
+      }, 3000);
+    }
+  };
+
+  const handleMarkAsRead = (messageIds: string[]) => {
+    setMessages(prev =>
+      prev.map(msg =>
+        messageIds.includes(msg.id) ? { ...msg, read: true } : msg
+      )
+    );
   };
 
   if (!campaign) {
@@ -83,11 +153,34 @@ export const CampaignDetailPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Tabs */}
+        <div className={styles.tabs}>
+          <button
+            className={`${styles.tab} ${activeTab === 'overview' ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab('overview')}
+          >
+            📋 Vista General
+          </button>
+          <button
+            className={`${styles.tab} ${activeTab === 'chat' ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab('chat')}
+          >
+            💬 Chat
+            {messages.filter(m => !m.read && m.senderId !== user?.id).length > 0 && (
+              <span className={styles.badge}>
+                {messages.filter(m => !m.read && m.senderId !== user?.id).length}
+              </span>
+            )}
+          </button>
+        </div>
+
         <div className={styles.content}>
-          {/* Main Column */}
-          <div className={styles.mainColumn}>
-            {/* Participants */}
-            <section className={styles.section}>
+          {activeTab === 'overview' ? (
+            <>
+              {/* Main Column */}
+              <div className={styles.mainColumn}>
+                {/* Participants */}
+                <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Participantes</h2>
               <div className={styles.participants}>
                 <div className={styles.participant}>
@@ -111,10 +204,10 @@ export const CampaignDetailPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </section>
+                </section>
 
-            {/* Brief */}
-            <section className={styles.section}>
+                {/* Brief */}
+                <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Brief de Campaña</h2>
               <p className={styles.description}>{campaign.brief.description}</p>
 
@@ -139,10 +232,10 @@ export const CampaignDetailPage: React.FC = () => {
                   </div>
                 </div>
               )}
-            </section>
+                </section>
 
-            {/* Deliverables */}
-            <section className={styles.section}>
+                {/* Deliverables */}
+                <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Entregables</h2>
               <div className={styles.deliverables}>
                 {campaign.deliverables.map((deliverable) => (
@@ -173,16 +266,16 @@ export const CampaignDetailPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </section>
+                </section>
 
-            {/* Timeline */}
-            <CampaignTimeline events={campaign.timeline} />
-          </div>
+                {/* Timeline */}
+                <CampaignTimeline events={campaign.timeline} />
+              </div>
 
-          {/* Sidebar */}
-          <aside className={styles.sidebar}>
-            {/* Budget Card */}
-            <div className={styles.card}>
+              {/* Sidebar */}
+              <aside className={styles.sidebar}>
+                {/* Budget Card */}
+                <div className={styles.card}>
               <h3 className={styles.cardTitle}>Presupuesto</h3>
               <div className={styles.budgetValue}>{formatCurrency(campaign.presupuesto)}</div>
 
@@ -200,11 +293,11 @@ export const CampaignDetailPage: React.FC = () => {
                   <span className={styles.paymentValue}>{campaign.paymentTerms.completion}%</span>
                 </div>
               </div>
-            </div>
+                </div>
 
-            {/* Contract Card */}
-            {campaign.contrato && (
-              <div className={styles.card}>
+                {/* Contract Card */}
+                {campaign.contrato && (
+                  <div className={styles.card}>
                 <h3 className={styles.cardTitle}>Contrato</h3>
                 <div className={styles.contractInfo}>
                   <div className={styles.contractStatus}>
@@ -222,11 +315,11 @@ export const CampaignDetailPage: React.FC = () => {
                     📄 Ver Contrato
                   </Button>
                 )}
-              </div>
-            )}
+                  </div>
+                )}
 
-            {/* Actions */}
-            <div className={styles.card}>
+                {/* Actions */}
+                <div className={styles.card}>
               <h3 className={styles.cardTitle}>Acciones</h3>
               <div className={styles.actions}>
                 {campaign.estado === 'completada' && (
@@ -248,8 +341,27 @@ export const CampaignDetailPage: React.FC = () => {
                   </Button>
                 )}
               </div>
+                </div>
+              </aside>
+            </>
+          ) : (
+            /* Chat Tab */
+            <div className={styles.chatContainer}>
+              <ChatWindow
+                campaignId={campaign._id}
+                currentUserId={user?.id || 'current-user'}
+                otherUserName={
+                  user?.tipo === 'creator'
+                    ? campaign.participants.brandName
+                    : campaign.participants.creatorNames[0]
+                }
+                messages={messages}
+                onSendMessage={handleSendMessage}
+                onMarkAsRead={handleMarkAsRead}
+                isOtherUserTyping={isOtherUserTyping}
+              />
             </div>
-          </aside>
+          )}
         </div>
 
         {/* Review Form Modal */}

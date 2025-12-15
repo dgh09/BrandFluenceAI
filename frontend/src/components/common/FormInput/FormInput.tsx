@@ -10,6 +10,7 @@ interface FormInputProps {
   placeholder?: string;
   required?: boolean;
   error?: string;
+  helperText?: string;
   disabled?: boolean;
   min?: number;
   max?: number;
@@ -25,6 +26,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   placeholder,
   required = false,
   error,
+  helperText,
   disabled = false,
   min,
   max,
@@ -51,6 +53,7 @@ export const FormInput: React.FC<FormInputProps> = ({
         className={`${styles.input} ${error ? styles.inputError : ''}`}
       />
       {error && <span className={styles.errorMessage}>{error}</span>}
+      {!error && helperText && <span className={styles.helperText}>{helperText}</span>}
     </div>
   );
 };
