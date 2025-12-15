@@ -13,11 +13,15 @@ export const MatchingPage: React.FC = () => {
   const {
     filters,
     filteredCreators,
+    totalResults,
     updateFilter,
     clearFilters,
     sortBy,
     setSortBy,
-    activeFiltersCount
+    activeFiltersCount,
+    currentPage,
+    totalPages,
+    setCurrentPage
   } = useMatchingFilters(mockCreators);
 
   // Campaign modal state
@@ -90,9 +94,14 @@ export const MatchingPage: React.FC = () => {
             {/* Results Header */}
             <div className={styles.resultsHeader}>
               <div>
-                <h2>{filteredCreators.length} Creadores Encontrados</h2>
+                <h2>{totalResults} Creadores Encontrados</h2>
                 {activeFiltersCount > 0 && (
                   <p>{activeFiltersCount} filtro{activeFiltersCount > 1 ? 's' : ''} activo{activeFiltersCount > 1 ? 's' : ''}</p>
+                )}
+                {totalPages > 1 && (
+                  <p className={styles.pageInfo}>
+                    Mostrando {filteredCreators.length} de {totalResults} resultados (Página {currentPage} de {totalPages})
+                  </p>
                 )}
               </div>
               <div className={styles.sortOptions}>
@@ -111,16 +120,53 @@ export const MatchingPage: React.FC = () => {
 
             {/* Creators Grid */}
             {filteredCreators.length > 0 ? (
-              <div className={styles.creatorsGrid}>
-                {filteredCreators.map((creator) => (
-                  <CreatorCard
-                    key={creator.id}
-                    creator={creator}
-                    onContact={handleContactClick}
-                    onViewProfile={(id) => navigate(`/creator/${id}`)}
-                  />
-                ))}
-              </div>
+              <>
+                <div className={styles.creatorsGrid}>
+                  {filteredCreators.map((creator) => (
+                    <CreatorCard
+                      key={creator.id}
+                      creator={creator}
+                      onContact={handleContactClick}
+                      onViewProfile={(id) => navigate(`/creator/${id}`)}
+                    />
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className={styles.pagination}>
+                    <button
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className={styles.paginationButton}
+                    >
+                      ← Anterior
+                    </button>
+
+                    <div className={styles.paginationPages}>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page)}
+                          className={`${styles.paginationPage} ${
+                            page === currentPage ? styles.paginationPageActive : ''
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className={styles.paginationButton}
+                    >
+                      Siguiente →
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className={styles.emptyState}>
                 <div className={styles.emptyIcon}>🔍</div>

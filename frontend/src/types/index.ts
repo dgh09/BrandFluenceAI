@@ -269,9 +269,10 @@ export interface MatchFilters {
   };
   plataformas?: ('tiktok' | 'instagram' | 'youtube')[];
   tipoContenido?: string[];
-  audienciaTarget?: string;
-  genero?: string;
-  ubicacion?: string;
+  audienciaEdad?: string; // Age range of target audience
+  audienciaGenero?: string; // Gender of target audience
+  genero?: string; // Gender of creator
+  ubicacion?: string; // Creator location
   idioma?: string;
 }
 

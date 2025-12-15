@@ -22,6 +22,22 @@ const nichoOptions = [
 
 const plataformaOptions = ['tiktok', 'instagram', 'youtube'] as const;
 
+const contentTypeOptions = [
+  { value: 'video', label: '📹 Videos' },
+  { value: 'foto', label: '📷 Fotos' },
+  { value: 'reel', label: '🎬 Reels' },
+  { value: 'historia', label: '📱 Historias' },
+  { value: 'livestream', label: '🔴 Livestreams' }
+];
+
+const ubicacionOptions = [
+  'México', 'Estados Unidos', 'España', 'Colombia', 'Argentina',
+  'Chile', 'Perú', 'Venezuela', 'Ecuador', 'Guatemala'
+];
+
+const audienceAgeOptions = ['18-24', '25-34', '35-44', '45-54', '55+'];
+const audienceGenderOptions = ['Femenino', 'Masculino', 'Mixto'];
+
 export const MatchingFilters: React.FC<MatchingFiltersProps> = ({
   filters,
   onFilterChange,
@@ -42,6 +58,14 @@ export const MatchingFilters: React.FC<MatchingFiltersProps> = ({
       ? currentPlataformas.filter(p => p !== plataforma)
       : [...currentPlataformas, plataforma];
     onFilterChange('plataformas', newPlataformas);
+  };
+
+  const handleContentTypeToggle = (type: string) => {
+    const currentTypes = filters.tipoContenido || [];
+    const newTypes = currentTypes.includes(type)
+      ? currentTypes.filter(t => t !== type)
+      : [...currentTypes, type];
+    onFilterChange('tipoContenido', newTypes);
   };
 
   return (
@@ -148,6 +172,106 @@ export const MatchingFilters: React.FC<MatchingFiltersProps> = ({
               </span>
             </label>
           ))}
+        </div>
+      </div>
+
+      {/* Seguidores */}
+      <div className={styles.filterSection}>
+        <h4>Seguidores</h4>
+        <div className={styles.rangeInputs}>
+          <input
+            type="number"
+            placeholder="Min"
+            value={filters.seguidores?.min || 0}
+            onChange={(e) => onFilterChange('seguidores', {
+              ...filters.seguidores,
+              min: parseInt(e.target.value) || 0
+            })}
+            className={styles.rangeInput}
+          />
+          <span>-</span>
+          <input
+            type="number"
+            placeholder="Max"
+            value={filters.seguidores?.max || 10000000}
+            onChange={(e) => onFilterChange('seguidores', {
+              ...filters.seguidores,
+              max: parseInt(e.target.value) || 10000000
+            })}
+            className={styles.rangeInput}
+          />
+        </div>
+        <small className={styles.filterHint}>Número mínimo y máximo de seguidores</small>
+      </div>
+
+      {/* Tipo de Contenido */}
+      <div className={styles.filterSection}>
+        <h4>Tipo de Contenido</h4>
+        <div className={styles.checkboxGroup}>
+          {contentTypeOptions.map(type => (
+            <label key={type.value} className={styles.checkbox}>
+              <input
+                type="checkbox"
+                checked={filters.tipoContenido?.includes(type.value) || false}
+                onChange={() => handleContentTypeToggle(type.value)}
+              />
+              <span>{type.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Ubicación del Creador */}
+      <div className={styles.filterSection}>
+        <h4>Ubicación del Creador</h4>
+        <select
+          value={filters.ubicacion || ''}
+          onChange={(e) => onFilterChange('ubicacion', e.target.value)}
+          className={styles.select}
+        >
+          <option value="">Todas las ubicaciones</option>
+          {ubicacionOptions.map(ubicacion => (
+            <option key={ubicacion} value={ubicacion}>
+              {ubicacion}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Audiencia Objetivo */}
+      <div className={styles.filterSection}>
+        <h4>Audiencia Objetivo</h4>
+
+        <div className={styles.subSection}>
+          <label className={styles.subLabel}>Edad</label>
+          <select
+            value={filters.audienciaEdad || ''}
+            onChange={(e) => onFilterChange('audienciaEdad', e.target.value)}
+            className={styles.select}
+          >
+            <option value="">Todas las edades</option>
+            {audienceAgeOptions.map(age => (
+              <option key={age} value={age}>
+                {age} años
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className={styles.subSection}>
+          <label className={styles.subLabel}>Género</label>
+          <select
+            value={filters.audienciaGenero || ''}
+            onChange={(e) => onFilterChange('audienciaGenero', e.target.value)}
+            className={styles.select}
+          >
+            <option value="">Todos los géneros</option>
+            {audienceGenderOptions.map(gender => (
+              <option key={gender} value={gender}>
+                {gender}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </aside>

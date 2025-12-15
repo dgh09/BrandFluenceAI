@@ -7,13 +7,20 @@ const initialFilters: MatchFilters = {
   seguidores: { min: 0, max: 10000000 },
   engagementRate: { min: 0, max: 20 },
   plataformas: [],
+  tipoContenido: [],
+  audienciaEdad: '',
+  audienciaGenero: '',
+  genero: '',
   ubicacion: '',
   idioma: ''
 };
 
+const ITEMS_PER_PAGE = 15;
+
 export const useMatchingFilters = (creators: CreatorCard[]) => {
   const [filters, setFilters] = useState<MatchFilters>(initialFilters);
   const [sortBy, setSortBy] = useState<'relevance' | 'price' | 'engagement'>('relevance');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredCreators = useMemo(() => {
     let result = [...creators];
@@ -90,18 +97,45 @@ export const useMatchingFilters = (creators: CreatorCard[]) => {
     let count = 0;
     if (filters.nicho && filters.nicho.length > 0) count += filters.nicho.length;
     if (filters.plataformas && filters.plataformas.length > 0) count += filters.plataformas.length;
+    if (filters.tipoContenido && filters.tipoContenido.length > 0) count += filters.tipoContenido.length;
     if (filters.presupuesto && (filters.presupuesto.min > 0 || filters.presupuesto.max < 10000)) count++;
     if (filters.engagementRate && (filters.engagementRate.min > 0 || filters.engagementRate.max < 20)) count++;
+    if (filters.seguidores && (filters.seguidores.min > 0 || filters.seguidores.max < 10000000)) count++;
+    if (filters.ubicacion) count++;
+    if (filters.audienciaEdad) count++;
+    if (filters.audienciaGenero) count++;
     return count;
   }, [filters]);
 
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredCreators.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedCreators = filteredCreators.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  const updateFilterWithReset = (key: keyof MatchFilters, value: any) => {
+    setCurrentPage(1);
+    updateFilter(key, value);
+  };
+
+  const clearFiltersWithReset = () => {
+    setCurrentPage(1);
+    clearFilters();
+  };
+
   return {
     filters,
-    filteredCreators,
-    updateFilter,
-    clearFilters,
+    filteredCreators: paginatedCreators,
+    allFilteredCreators: filteredCreators,
+    totalResults: filteredCreators.length,
+    updateFilter: updateFilterWithReset,
+    clearFilters: clearFiltersWithReset,
     sortBy,
     setSortBy,
-    activeFiltersCount
+    activeFiltersCount,
+    currentPage,
+    totalPages,
+    setCurrentPage
   };
 };
