@@ -21,12 +21,18 @@ export const MatchingPage: React.FC = () => {
     activeFiltersCount,
     currentPage,
     totalPages,
-    setCurrentPage
+    setCurrentPage,
+    savePreferences,
+    loadPreferences,
+    hasSavedPreferences
   } = useMatchingFilters(mockCreators);
 
   // Campaign modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCreator, setSelectedCreator] = useState<{ id: string; name: string } | null>(null);
+
+  // View mode state
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const handleContactClick = (creatorId: string) => {
     const creator = mockCreators.find(c => c.id === creatorId);
@@ -87,6 +93,9 @@ export const MatchingPage: React.FC = () => {
             onFilterChange={updateFilter}
             onClearFilters={clearFilters}
             activeFiltersCount={activeFiltersCount}
+            onSavePreferences={savePreferences}
+            onLoadPreferences={loadPreferences}
+            hasSavedPreferences={hasSavedPreferences}
           />
 
           {/* Results Section */}
@@ -104,24 +113,45 @@ export const MatchingPage: React.FC = () => {
                   </p>
                 )}
               </div>
-              <div className={styles.sortOptions}>
-                <label>Ordenar por:</label>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as 'relevance' | 'price' | 'engagement')}
-                  className={styles.sortSelect}
-                >
-                  <option value="relevance">Relevancia</option>
-                  <option value="price">Precio</option>
-                  <option value="engagement">Engagement</option>
-                </select>
+              <div className={styles.headerActions}>
+                {/* View Mode Toggle */}
+                <div className={styles.viewToggle}>
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`${styles.viewButton} ${viewMode === 'grid' ? styles.viewButtonActive : ''}`}
+                    title="Vista de cuadrícula"
+                  >
+                    ⊞
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`${styles.viewButton} ${viewMode === 'list' ? styles.viewButtonActive : ''}`}
+                    title="Vista de lista"
+                  >
+                    ☰
+                  </button>
+                </div>
+
+                {/* Sort Options */}
+                <div className={styles.sortOptions}>
+                  <label>Ordenar por:</label>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as 'relevance' | 'price' | 'engagement')}
+                    className={styles.sortSelect}
+                  >
+                    <option value="relevance">Relevancia</option>
+                    <option value="price">Precio</option>
+                    <option value="engagement">Engagement</option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            {/* Creators Grid */}
+            {/* Creators Grid/List */}
             {filteredCreators.length > 0 ? (
               <>
-                <div className={styles.creatorsGrid}>
+                <div className={viewMode === 'grid' ? styles.creatorsGrid : styles.creatorsList}>
                   {filteredCreators.map((creator) => (
                     <CreatorCard
                       key={creator.id}

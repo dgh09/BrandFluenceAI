@@ -1,4 +1,5 @@
 import React from 'react';
+import { RangeSlider } from '../../common';
 import type { MatchFilters } from '../../../types';
 import styles from './MatchingFilters.module.css';
 
@@ -7,6 +8,9 @@ interface MatchingFiltersProps {
   onFilterChange: (key: keyof MatchFilters, value: any) => void;
   onClearFilters: () => void;
   activeFiltersCount: number;
+  onSavePreferences?: () => void;
+  onLoadPreferences?: () => void;
+  hasSavedPreferences?: boolean;
 }
 
 const nichoOptions = [
@@ -42,7 +46,10 @@ export const MatchingFilters: React.FC<MatchingFiltersProps> = ({
   filters,
   onFilterChange,
   onClearFilters,
-  activeFiltersCount
+  activeFiltersCount,
+  onSavePreferences,
+  onLoadPreferences,
+  hasSavedPreferences
 }) => {
   const handleNichoToggle = (nicho: string) => {
     const currentNichos = filters.nicho || [];
@@ -79,6 +86,30 @@ export const MatchingFilters: React.FC<MatchingFiltersProps> = ({
         )}
       </div>
 
+      {/* Preferences Management */}
+      {(onSavePreferences || onLoadPreferences) && (
+        <div className={styles.preferencesSection}>
+          {hasSavedPreferences && onLoadPreferences && (
+            <button
+              onClick={onLoadPreferences}
+              className={styles.loadButton}
+              title="Cargar preferencias guardadas"
+            >
+              📥 Cargar Preferencias
+            </button>
+          )}
+          {onSavePreferences && (
+            <button
+              onClick={onSavePreferences}
+              className={styles.saveButton}
+              title="Guardar filtros actuales"
+            >
+              💾 {hasSavedPreferences ? 'Actualizar' : 'Guardar'}
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Nicho */}
       <div className={styles.filterSection}>
         <h4>Nicho</h4>
@@ -97,62 +128,32 @@ export const MatchingFilters: React.FC<MatchingFiltersProps> = ({
       </div>
 
       {/* Presupuesto */}
-      <div className={styles.filterSection}>
-        <h4>Presupuesto</h4>
-        <div className={styles.rangeInputs}>
-          <input
-            type="number"
-            placeholder="Min"
-            value={filters.presupuesto?.min || 0}
-            onChange={(e) => onFilterChange('presupuesto', {
-              ...filters.presupuesto,
-              min: parseInt(e.target.value) || 0
-            })}
-            className={styles.rangeInput}
-          />
-          <span>-</span>
-          <input
-            type="number"
-            placeholder="Max"
-            value={filters.presupuesto?.max || 10000}
-            onChange={(e) => onFilterChange('presupuesto', {
-              ...filters.presupuesto,
-              max: parseInt(e.target.value) || 10000
-            })}
-            className={styles.rangeInput}
-          />
-        </div>
-      </div>
+      <RangeSlider
+        label="Presupuesto por Campaña"
+        min={0}
+        max={10000}
+        step={100}
+        value={{
+          min: filters.presupuesto?.min || 0,
+          max: filters.presupuesto?.max || 10000
+        }}
+        onChange={(value) => onFilterChange('presupuesto', value)}
+        formatValue={(v) => `$${v.toLocaleString()}`}
+      />
 
       {/* Engagement Rate */}
-      <div className={styles.filterSection}>
-        <h4>Engagement Rate (%)</h4>
-        <div className={styles.rangeInputs}>
-          <input
-            type="number"
-            placeholder="Min"
-            value={filters.engagementRate?.min || 0}
-            onChange={(e) => onFilterChange('engagementRate', {
-              ...filters.engagementRate,
-              min: parseFloat(e.target.value) || 0
-            })}
-            className={styles.rangeInput}
-            step="0.1"
-          />
-          <span>-</span>
-          <input
-            type="number"
-            placeholder="Max"
-            value={filters.engagementRate?.max || 20}
-            onChange={(e) => onFilterChange('engagementRate', {
-              ...filters.engagementRate,
-              max: parseFloat(e.target.value) || 20
-            })}
-            className={styles.rangeInput}
-            step="0.1"
-          />
-        </div>
-      </div>
+      <RangeSlider
+        label="Engagement Rate"
+        min={0}
+        max={20}
+        step={0.5}
+        value={{
+          min: filters.engagementRate?.min || 0,
+          max: filters.engagementRate?.max || 20
+        }}
+        onChange={(value) => onFilterChange('engagementRate', value)}
+        formatValue={(v) => `${v}%`}
+      />
 
       {/* Plataformas */}
       <div className={styles.filterSection}>
@@ -176,33 +177,22 @@ export const MatchingFilters: React.FC<MatchingFiltersProps> = ({
       </div>
 
       {/* Seguidores */}
-      <div className={styles.filterSection}>
-        <h4>Seguidores</h4>
-        <div className={styles.rangeInputs}>
-          <input
-            type="number"
-            placeholder="Min"
-            value={filters.seguidores?.min || 0}
-            onChange={(e) => onFilterChange('seguidores', {
-              ...filters.seguidores,
-              min: parseInt(e.target.value) || 0
-            })}
-            className={styles.rangeInput}
-          />
-          <span>-</span>
-          <input
-            type="number"
-            placeholder="Max"
-            value={filters.seguidores?.max || 10000000}
-            onChange={(e) => onFilterChange('seguidores', {
-              ...filters.seguidores,
-              max: parseInt(e.target.value) || 10000000
-            })}
-            className={styles.rangeInput}
-          />
-        </div>
-        <small className={styles.filterHint}>Número mínimo y máximo de seguidores</small>
-      </div>
+      <RangeSlider
+        label="Seguidores"
+        min={0}
+        max={10000000}
+        step={10000}
+        value={{
+          min: filters.seguidores?.min || 0,
+          max: filters.seguidores?.max || 10000000
+        }}
+        onChange={(value) => onFilterChange('seguidores', value)}
+        formatValue={(v) => {
+          if (v >= 1000000) return `${(v / 1000000).toFixed(1)}M`;
+          if (v >= 1000) return `${(v / 1000).toFixed(0)}K`;
+          return v.toString();
+        }}
+      />
 
       {/* Tipo de Contenido */}
       <div className={styles.filterSection}>

@@ -1,5 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { CreatorCard, MatchFilters } from '../types';
+
+const STORAGE_KEY = 'brandFluenceAI_matchingFilters';
 
 const initialFilters: MatchFilters = {
   nicho: [],
@@ -21,6 +23,62 @@ export const useMatchingFilters = (creators: CreatorCard[]) => {
   const [filters, setFilters] = useState<MatchFilters>(initialFilters);
   const [sortBy, setSortBy] = useState<'relevance' | 'price' | 'engagement'>('relevance');
   const [currentPage, setCurrentPage] = useState(1);
+  const [hasSavedPreferences, setHasSavedPreferences] = useState(false);
+
+  // Load saved preferences on mount
+  useEffect(() => {
+    const savedFilters = localStorage.getItem(STORAGE_KEY);
+    if (savedFilters) {
+      try {
+        const parsed = JSON.parse(savedFilters);
+        setFilters(parsed);
+        setHasSavedPreferences(true);
+      } catch (error) {
+        console.error('Error loading saved filters:', error);
+      }
+    }
+  }, []);
+
+  // Save preferences to localStorage
+  const savePreferences = () => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(filters));
+      setHasSavedPreferences(true);
+      return true;
+    } catch (error) {
+      console.error('Error saving filters:', error);
+      return false;
+    }
+  };
+
+  // Load preferences from localStorage
+  const loadPreferences = () => {
+    const savedFilters = localStorage.getItem(STORAGE_KEY);
+    if (savedFilters) {
+      try {
+        const parsed = JSON.parse(savedFilters);
+        setFilters(parsed);
+        setCurrentPage(1);
+        return true;
+      } catch (error) {
+        console.error('Error loading filters:', error);
+        return false;
+      }
+    }
+    return false;
+  };
+
+  // Clear saved preferences
+  const clearSavedPreferences = () => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      setHasSavedPreferences(false);
+      return true;
+    } catch (error) {
+      console.error('Error clearing saved filters:', error);
+      return false;
+    }
+  };
 
   const filteredCreators = useMemo(() => {
     let result = [...creators];
@@ -136,6 +194,11 @@ export const useMatchingFilters = (creators: CreatorCard[]) => {
     activeFiltersCount,
     currentPage,
     totalPages,
-    setCurrentPage
+    setCurrentPage,
+    // Preferences management
+    savePreferences,
+    loadPreferences,
+    clearSavedPreferences,
+    hasSavedPreferences
   };
 };

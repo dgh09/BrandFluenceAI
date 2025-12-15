@@ -19,6 +19,7 @@ export type { ButtonVariant, ButtonSize } from './Button';
 export { FormInput } from './FormInput';
 export { FormTextarea } from './FormTextarea';
 export { FormSelect } from './FormSelect';
+export { RangeSlider } from './RangeSlider';
 
 // UI Components
 export { Modal } from './Modal';
