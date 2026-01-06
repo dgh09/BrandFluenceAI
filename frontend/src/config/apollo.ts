@@ -1,27 +1,24 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
-// GraphQL endpoint - will connect to backend when deployed
-const httpLink = createHttpLink({
-  uri: import.meta.env.VITE_GRAPHQL_ENDPOINT || 'http://localhost:3000/graphql',
-});
-
-// Auth middleware to attach JWT tokens
-const authLink = setContext((_, { headers }) => {
-  // Get token from localStorage
+// Custom fetch function to attach JWT tokens
+const customFetch = (uri: RequestInfo | URL, options: RequestInit = {}) => {
   const token = localStorage.getItem('authToken');
 
-  return {
+  return fetch(uri, {
+    ...options,
     headers: {
-      ...headers,
+      ...options.headers,
       authorization: token ? `Bearer ${token}` : '',
-    }
-  };
-});
+    },
+  });
+};
 
 // Apollo Client instance
 export const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: new HttpLink({
+    uri: import.meta.env.VITE_GRAPHQL_ENDPOINT || 'http://localhost:3000/graphql',
+    fetch: customFetch,
+  }),
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {

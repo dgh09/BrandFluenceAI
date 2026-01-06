@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import { Button, FormInput, FormTextarea, FormSelect, Badge } from '../../components/common';
 import {
   COMPLETE_CREATOR_ONBOARDING,
-  CHECK_HANDLE_AVAILABILITY,
   type CreatorOnboardingInput
 } from '../../graphql';
 import { useAuth } from '../../contexts/AuthContext';
@@ -80,21 +79,13 @@ export const OnboardingCreatorPage: React.FC = () => {
 
   // GraphQL mutations and queries
   const [completeOnboarding, { loading: onboardingLoading }] = useMutation(COMPLETE_CREATOR_ONBOARDING);
-  const [checkHandle] = useLazyQuery(CHECK_HANDLE_AVAILABILITY);
 
-  // Check if handle is unique using GraphQL query
+  // Check if handle is unique using local validation
+  // TODO: Integrate with backend GraphQL query when needed
   const checkHandleAvailability = async (handle: string): Promise<boolean> => {
-    try {
-      const { data: checkData } = await checkHandle({
-        variables: { handle }
-      });
-      return checkData?.checkHandleAvailability?.available || false;
-    } catch (error) {
-      console.error('Error checking handle availability:', error);
-      // Fallback to simulated check if backend is not available
-      const takenHandles = ['admin', 'test', 'demo', 'brandfluence'];
-      return !takenHandles.includes(handle.toLowerCase().replace('@', ''));
-    }
+    // Local validation: check against reserved handles
+    const takenHandles = ['admin', 'test', 'demo', 'brandfluence', 'root', 'system'];
+    return !takenHandles.includes(handle.toLowerCase().replace('@', ''));
   };
 
   // Handle input changes
