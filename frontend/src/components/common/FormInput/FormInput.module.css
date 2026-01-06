@@ -8,7 +8,8 @@
 .label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text);
+  margin-bottom: 0.5rem;
 }
 
 .required {
@@ -21,8 +22,8 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 0.9375rem;
-  color: var(--text-primary);
-  background: var(--bg-primary);
+  color: var(--text);
+  background: var(--dark-light);
   transition: all 0.2s;
 }
 
@@ -33,9 +34,10 @@
 }
 
 .input:disabled {
-  background: var(--bg-secondary);
+  background: var(--dark-lighter);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
+  color: var(--text-muted);
 }
 
 .inputError {

@@ -17,10 +17,11 @@
 }
 
 .loginCard {
-  background: var(--bg-primary);
+  background: var(--dark-light);
   border-radius: 20px;
   padding: 3rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
 }
 
 .header {
@@ -112,11 +113,12 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: var(--bg-secondary);
+  background: var(--dark-lighter);
   border: 2px solid var(--border);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
+  color: var(--text);
 }
 
 .demoButton:hover {
@@ -138,7 +140,7 @@
 .demoLabel {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text);
   margin-bottom: 0.25rem;
 }
 

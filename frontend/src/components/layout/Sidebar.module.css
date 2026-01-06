@@ -72,7 +72,7 @@
 .userName {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -111,7 +111,7 @@
 
 .navItem:hover {
   background: rgba(99, 102, 241, 0.1);
-  color: var(--text-primary);
+  color: var(--text);
 }
 
 .navItem.active {

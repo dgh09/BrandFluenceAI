@@ -7,10 +7,11 @@
 .container {
   max-width: 800px;
   margin: 0 auto;
-  background: var(--bg-primary);
+  background: var(--dark-light);
   border-radius: 20px;
   padding: 3rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
 }
 
 /* Header */
@@ -65,7 +66,7 @@
 .progressBar {
   width: 100%;
   height: 8px;
-  background: var(--bg-secondary);
+  background: var(--dark-lighter);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 0.75rem;
@@ -114,7 +115,7 @@
   font-size: 2rem;
   font-weight: 700;
   margin: 0 0 0.75rem 0;
-  color: var(--text-primary);
+  color: var(--text);
 }
 
 .stepHeader p {
@@ -134,7 +135,7 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text);
   margin-bottom: 0.5rem;
 }
 
@@ -181,8 +182,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--bg-secondary);
-  color: var(--text-muted);
+  background: var(--dark-lighter);
+  color: var(--text);
 }
 
 .logoPlaceholder span {
@@ -250,12 +251,12 @@
 
 .nicheButton {
   padding: 0.75rem 1rem;
-  background: var(--bg-secondary);
+  background: var(--dark-lighter);
   border: 2px solid var(--border);
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -291,12 +292,12 @@
 
 .contentTypeButton {
   padding: 0.75rem 1rem;
-  background: var(--bg-secondary);
+  background: var(--dark-lighter);
   border: 2px solid var(--border);
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -330,12 +331,12 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-  background: var(--bg-secondary);
+  background: var(--dark-lighter);
   border: 2px solid var(--border);
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
   text-align: left;
@@ -379,7 +380,7 @@
   border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 8px;
   font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: var(--text);
 }
 
 .infoIcon {

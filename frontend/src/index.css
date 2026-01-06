@@ -17,11 +17,24 @@
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
+  --error: #EF4444;
   --dark: #0F172A;
   --dark-light: #1E293B;
   --dark-lighter: #334155;
   --text: #F8FAFC;
+  --text-primary: #F8FAFC;
   --text-muted: #94A3B8;
+  
+  /* Background Colors */
+  --bg-primary: #1E293B;
+  --bg-secondary: #334155;
+  --bg-tertiary: #475569;
+  
+  /* Border Colors */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.05);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.2);
 
   /* Gradients */
   --gradient-1: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
@@ -68,6 +81,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
+
+/* Force browser refresh - Styles updated */
 
 #root {
   min-height: 100vh;

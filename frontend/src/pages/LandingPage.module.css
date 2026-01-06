@@ -1,8 +1,8 @@
 /* Landing Page Styles */
 .landing {
   min-height: 100vh;
-  background: var(--background);
-  color: var(--text-primary);
+  background: var(--dark);
+  color: var(--text);
 }
 
 /* Navigation */
@@ -12,7 +12,7 @@
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   padding: 1rem 0;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .navLinks a {
-  color: var(--text-primary);
+  color: #0F172A !important;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
@@ -112,7 +112,7 @@
 
 .statLabel {
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: #334155 !important;
   font-weight: 500;
 }
 
@@ -126,17 +126,18 @@
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 1rem;
+  color: #0F172A !important;
 }
 
 .sectionHeader p {
   font-size: 1.125rem;
-  color: var(--text-secondary);
+  color: #334155 !important;
 }
 
 /* How It Works Section */
 .howItWorks {
   padding: 6rem 2rem;
-  background: var(--background);
+  background: var(--dark);
 }
 
 .workflowContainer {
@@ -173,7 +174,7 @@
 .workflowDivider {
   width: 2px;
   height: 100%;
-  background: linear-gradient(180deg, transparent, var(--border-color), transparent);
+  background: linear-gradient(180deg, transparent, var(--border), transparent);
   margin: 0 2rem;
 }
 
@@ -219,7 +220,7 @@
 }
 
 .stepContent p {
-  color: var(--text-secondary);
+  color: #94A3B8 !important;
   line-height: 1.6;
 }
 
@@ -240,9 +241,19 @@
 .featureCard {
   padding: 2rem;
   border-radius: 16px;
-  background: var(--background);
-  border: 1px solid var(--border-color);
+  background: white;
+  border: 1px solid var(--border);
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.featureCard h3 {
+  color: #0F172A !important;
+  font-weight: 700;
+}
+
+.featureCard p {
+  color: #334155 !important;
+  line-height: 1.6;
 }
 
 .featureCard:hover {
@@ -255,21 +266,11 @@
   margin-bottom: 1rem;
 }
 
-.featureCard h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-}
-
-.featureCard p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
 
 /* Pricing Section */
 .pricing {
   padding: 6rem 2rem;
-  background: var(--background);
+  background: var(--dark);
 }
 
 .pricingGrid {
@@ -283,12 +284,21 @@
 .pricingCard {
   background: white;
   border-radius: 16px;
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--border);
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
   position: relative;
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pricingCard h3 {
+  color: #0F172A !important;
+  font-weight: 700;
+}
+
+.pricingCard .planDescription {
+  color: #334155 !important;
 }
 
 .pricingCard:hover {
@@ -328,18 +338,15 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: #0F172A !important;
 }
 
-.planDescription {
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-}
 
 .pricingPrice {
   text-align: center;
   margin-bottom: 2rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
 }
 
 .price {
@@ -353,7 +360,7 @@
 
 .period {
   font-size: 1.125rem;
-  color: var(--text-secondary);
+  color: #334155 !important;
 }
 
 .featuresList {
@@ -368,7 +375,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  color: var(--text-primary);
+  color: #0F172A !important;
   line-height: 1.5;
 }
 

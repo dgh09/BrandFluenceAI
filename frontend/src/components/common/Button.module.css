@@ -60,11 +60,14 @@
 }
 
 .white {
-  background: white;
-  color: var(--primary);
+  background: var(--text);
+  color: var(--dark);
+  font-weight: 600;
 }
 
 .white:hover {
+  background: var(--text);
+  color: var(--primary);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
